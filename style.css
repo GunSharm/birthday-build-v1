@@ -7,6 +7,11 @@ body {
     font-size: 300%;
     text-align: center;
   }
+  .tagline {
+    color: whitesmoke;
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+  }
   h2 {
     color:whitesmoke;
     font-family: 'Bebas Neue', sans-serif;
@@ -83,4 +88,10 @@ body {
     font-size: 14px;
     font-weight: 500;
     color: #333333;
+}
+
+#message {
+    color: whitesmoke;
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
 }

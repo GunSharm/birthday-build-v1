@@ -1,12 +1,19 @@
-// 1. Select the elements from the DOM
-const toggleButton = document.querySelector('#toggle-btn');
-const secretText = document.querySelector('#secret-text');
+const gunjanBtn = document.querySelector("#btn-gunjan")
+const guestBtn = document.querySelector("#btn-guest")
+const garvitBtn = document.querySelector("#btn-garvit")
+const profiles = document.querySelector("#profiles")
+const home = document.querySelector("#home")
+const message = document.querySelector("#message")
 
-// 2. Initialize the text as hidden
-secretText.hidden = true;
+gunjanBtn.addEventListener("click", () => {
+    message.textContent = "Nice try, you already know how this ends.";
+});
 
-// 3. Add a click event listener to the button
-toggleButton.addEventListener('click', () => {
-    // 4. Toggle the hidden property (true becomes false, false becomes true)
-    secretText.hidden = !secretText.hidden;
+guestBtn.addEventListener("click", () => {
+    message.textContent = "Guests aren't allowed here.";
+});
+
+garvitBtn.addEventListener("click", () => {
+    profiles.hidden = true;
+    home.hidden = false;
 });
