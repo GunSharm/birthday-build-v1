@@ -1,0 +1,86 @@
+body {
+    background-color: black;
+  }
+  h1 {
+    color:#e50914;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 300%;
+    text-align: center;
+  }
+  h2 {
+    color:whitesmoke;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 200%;
+    text-align: center;
+  }
+  main {
+    color:whitesmoke;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 100%;
+    text-align: center;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Spacing between buttons */
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    padding: 20px;
+    
+}
+
+/* Button styling and layout */
+.color-btn {
+    display: inline-flex;
+    flex-direction: column; /* Stacks the square and text vertically */
+    align-items: center;    /* Centers items horizontally */
+    justify-content: center;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 80px;
+}
+
+/* Hover and active states for the button */
+.color-btn:hover {
+    border-color: #a0a0a0;
+    background-color: #f9f9f9;
+    transform: translateY(-2px);
+}
+
+.color-btn:active {
+    transform: translateY(0);
+}
+
+/* The colored square sizing */
+.color-square {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px; /* Optional: rounds the square corners slightly */
+    margin-bottom: 8px; /* Spaces the square away from the text below it */
+}
+
+/* Specific colors for each square */
+.ruby {
+    background-color: #e63946;
+}
+
+.emerald {
+    background-color: #2a9d8f;
+}
+
+.sapphire {
+    background-color: #457b9d;
+}
+
+/* Text styling under the squares */
+.color-name {
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
+}
