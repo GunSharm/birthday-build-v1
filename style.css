@@ -137,3 +137,15 @@ body {
 #board {
     text-align: center;
 }
+
+.correct {
+    background-color: #538d4e;
+}
+
+.absent {
+    background-color: grey;
+}
+
+.present {
+    background-color: #c8b653;
+}

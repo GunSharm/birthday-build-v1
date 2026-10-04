@@ -66,13 +66,23 @@ guessBtn.addEventListener("click", () => {
         guessFeedback.textContent = "Panda, you can do better";
     }
     const row = document.createElement("div");
-    typed.split("").forEach((letter) => {
+    typed.split("").forEach((letter,i) => {
         const box = document.createElement("span");
         box.className = "title";
         box.textContent = letter;
+        if(letter === currentEpisode.answer[i]){
+            box.classList.add("correct");
+        } else if (currentEpisode.answer.includes(letter)){
+            box.classList.add("present");
+
+        } else {
+            box.classList.add("absent");
+        }
         row.appendChild(box);
     });
     board.appendChild(row);
+    
 });
+
 
 
