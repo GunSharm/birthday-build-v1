@@ -9,6 +9,12 @@ const puzzle = document.querySelector("#puzzle")
 const puzzleTitle = document.querySelector("#puzzle-title")
 const puzzleHint = document.querySelector("#puzzle-hint")
 const closeBtn = document.querySelector("#close-puzzle")
+const guessInput = document.querySelector("#guess-input")
+const guessBtn = document.querySelector("#guess-btn")
+const guessFeedback = document.querySelector("#guess-feedback")
+const board = document.querySelector("#board")
+let currentEpisode= null
+
 
 gunjanBtn.addEventListener("click", () => {
     message.textContent = "Nice try, you already know how this ends.";
@@ -40,9 +46,33 @@ episodes.forEach((episode) => {
         puzzleTitle.textContent = episode.title;
         puzzleHint.textContent = episode.hint1;
         puzzle.hidden=false;
+        currentEpisode = episode;
     })   
 });
 
 closeBtn.addEventListener("click", () =>{
     puzzle.hidden = true;
 });
+
+guessBtn.addEventListener("click", () => {
+    const typed = guessInput.value.toUpperCase();
+    if (typed.length !== 7) {
+        guessFeedback.textContent = "Needs 7 letters";
+        return;
+    }
+    if (typed === currentEpisode.answer) {
+        guessFeedback.textContent = "Any idea on the gift now?";
+    } else {
+        guessFeedback.textContent = "Panda, you can do better";
+    }
+    const row = document.createElement("div");
+    typed.split("").forEach((letter) => {
+        const box = document.createElement("span");
+        box.className = "tile";
+        box.textContent = letter;
+        row.appendChild(box);
+    });
+    board.appendChild(row);
+});
+
+
