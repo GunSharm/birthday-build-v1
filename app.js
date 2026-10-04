@@ -5,6 +5,10 @@ const profiles = document.querySelector("#profiles")
 const home = document.querySelector("#home")
 const message = document.querySelector("#message")
 const episodeRow = document.querySelector("#episode-row")
+const puzzle = document.querySelector("#puzzle")
+const puzzleTitle = document.querySelector("#puzzle-title")
+const puzzleHint = document.querySelector("#puzzle-hint")
+const closeBtn = document.querySelector("#close-puzzle")
 
 gunjanBtn.addEventListener("click", () => {
     message.textContent = "Nice try, you already know how this ends.";
@@ -31,5 +35,14 @@ episodes.forEach((episode) => {
     card.innerHTML = `<h3>${episode.title}</h3><p>${episode.tag} | ${episode.runtime}</p>`;
     card.className = "card";
     episodeRow.appendChild(card);
-    card.style.backgroundColor = episode.color;
+    card.style.backgroundColor = episode.color; 
+    card.addEventListener("click", () =>{
+        puzzleTitle.textContent = episode.title;
+        puzzleHint.textContent = episode.hint1;
+        puzzle.hidden=false;
+    })   
+});
+
+closeBtn.addEventListener("click", () =>{
+    puzzle.hidden = true;
 });
