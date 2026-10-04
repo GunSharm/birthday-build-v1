@@ -68,7 +68,7 @@ guessBtn.addEventListener("click", () => {
     const row = document.createElement("div");
     typed.split("").forEach((letter) => {
         const box = document.createElement("span");
-        box.className = "tile";
+        box.className = "title";
         box.textContent = letter;
         row.appendChild(box);
     });
