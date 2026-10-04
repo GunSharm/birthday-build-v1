@@ -95,3 +95,28 @@ body {
     text-align: center;
     font-family: 'Bebas Neue', sans-serif;
 }
+
+.card {
+    padding: 12px;
+    width: 220px;
+    height: 130px;
+    border-radius: 8px;
+    color: lavenderblush;
+    font-family: 'Bebas Neue', sans-serif;
+    cursor: pointer;
+}
+
+#episode-row {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+}
+
+.card p {
+    font-size: 100%;
+    color: plum;
+}
+
+.card h3 {
+    margin: 0px;
+}
