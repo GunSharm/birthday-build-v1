@@ -48,7 +48,12 @@ episodes.forEach((episode) => {
         puzzleHint.textContent = episode.hint1;
         puzzle.hidden=false;
         currentEpisode = episode;
-    })   
+        board.innerHTML = "";
+        guessesUsed = 0
+        guessFeedback.textContent = ""
+        guessInput.value = "" 
+    })
+      
 });
 
 closeBtn.addEventListener("click", () =>{
