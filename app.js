@@ -14,6 +14,7 @@ const guessBtn = document.querySelector("#guess-btn")
 const guessFeedback = document.querySelector("#guess-feedback")
 const board = document.querySelector("#board")
 let currentEpisode= null
+let guessesUsed = 0
 
 
 gunjanBtn.addEventListener("click", () => {
@@ -60,6 +61,10 @@ guessBtn.addEventListener("click", () => {
         guessFeedback.textContent = "Needs 7 letters";
         return;
     }
+    guessesUsed++
+    if(guessesUsed === 3){
+        puzzleHint.textContent = currentEpisode.hint2
+    }
     if (typed === currentEpisode.answer) {
         guessFeedback.textContent = "Any idea on the gift now?";
     } else {
@@ -94,7 +99,6 @@ guessBtn.addEventListener("click", () => {
     });
     
     board.appendChild(row);
-    console.log(results,remaining);
 });
 
 
