@@ -66,23 +66,35 @@ guessBtn.addEventListener("click", () => {
         guessFeedback.textContent = "Panda, you can do better";
     }
     const row = document.createElement("div");
+    const results = [];
+    const remaining = currentEpisode.answer.split("");
+    typed.split("").forEach((letter,i) => {
+        if(letter === currentEpisode.answer[i]){
+            results[i] = "correct";
+            remaining[i] = null
+        }
+    });
+    typed.split("").forEach((letter, i) => {
+        if (results[i] !== "correct") {
+            const spot = remaining.indexOf(letter);
+            if (spot !== -1) {
+                results[i] = "present";
+                remaining[spot] = null;
+            } else {
+                results[i] = "absent";
+            }
+        }
+    });
     typed.split("").forEach((letter,i) => {
         const box = document.createElement("span");
         box.className = "title";
         box.textContent = letter;
-        if(letter === currentEpisode.answer[i]){
-            box.classList.add("correct");
-        } else if (currentEpisode.answer.includes(letter)){
-            box.classList.add("present");
-
-        } else {
-            box.classList.add("absent");
-        }
+        box.classList.add(results[i]);
         row.appendChild(box);
     });
-    board.appendChild(row);
     
+    board.appendChild(row);
+    console.log(results,remaining);
 });
-
 
 
