@@ -52,6 +52,7 @@ episodes.forEach((episode) => {
         guessesUsed = 0
         guessFeedback.textContent = ""
         guessInput.value = "" 
+        guessBtn.disabled = false
     })
       
 });
@@ -72,6 +73,10 @@ guessBtn.addEventListener("click", () => {
     }
     if (typed === currentEpisode.answer) {
         guessFeedback.textContent = "Any idea on the gift now?";
+        
+    } else if (guessesUsed === currentEpisode.guesses){
+        guessFeedback.textContent = " Panda, its done :("
+        guessBtn.disabled = true
     } else {
         guessFeedback.textContent = "Panda, you can do better";
     }
