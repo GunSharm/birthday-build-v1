@@ -138,7 +138,14 @@ submitBtn.addEventListener("click", () => {
         return;
     }
 
-    connectionsFeedback.textContent = "5 selected";
+    const match = currentEpisode.groups.find((group) => {
+        return group.words.every((word) => selected.includes(word));
+    });
+    if (match){
+        connectionsFeedback.textContent = match.name;
+    } else {
+        connectionsFeedback.textContent = "Panda, you can do better";
+    }
 });
 
 closeBtn.addEventListener("click", () =>{
