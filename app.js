@@ -16,6 +16,7 @@ const board = document.querySelector("#board")
 const connections = document.querySelector("#connections")
 const connectionsTitle = document.querySelector("#connections-title")
 const closeConnections = document.querySelector("#close-connections")
+const connectionsBoard = document.querySelector("#connections-board")
 let currentEpisode= null
 let guessesUsed = 0
 
@@ -51,7 +52,8 @@ const episodes = [
 
     }
 ];
-console.log(episodes);
+
+
 
 episodes.forEach((episode) => {
     const card = document.createElement("div");
@@ -74,6 +76,23 @@ episodes.forEach((episode) => {
         } else {
             connectionsTitle.textContent = episode.title;
             connections.hidden=false;
+            connectionsBoard.innerHTML= "";
+
+            const allWords = [];
+            episode.groups.forEach((group) => {
+                group.words.forEach((word) => {
+                    allWords.push(word);
+                });
+            });
+            console.log(allWords.length)
+
+            allWords.forEach((word) => {
+                const tile = document.createElement("button");
+                tile.className = "word-tile";
+                tile.textContent = word;
+                connectionsBoard.appendChild(tile);
+            })
+
             puzzle.hidden = true
 
         }
