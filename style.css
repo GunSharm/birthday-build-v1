@@ -172,3 +172,13 @@ body {
     background-color:  #b7e4c7;
     color: #6f4e37;
 }
+
+.connections-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; 
+    padding: 20px;
+    margin : 5px;
+    
+}

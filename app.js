@@ -18,7 +18,7 @@ const connectionsTitle = document.querySelector("#connections-title")
 const closeConnections = document.querySelector("#close-connections")
 const connectionsBoard = document.querySelector("#connections-board")
 const shuffleBtn = document.querySelector("#shuffle-btn")
-const submitBtn = document.querySelector("submit-btn")
+const submitBtn = document.querySelector("#submit-btn")
 const connectionsFeedback = document.querySelector("#connections-feedback")
 let currentWords = []
 let currentEpisode= null
@@ -130,6 +130,15 @@ episodes.forEach((episode) => {
 shuffleBtn.addEventListener("click", () => {
     currentWords.sort(() => Math.random() - 0.5);
     drawTiles();
+});
+
+submitBtn.addEventListener("click", () => {
+    if(selected.length !==5){
+        connectionsFeedback.textContent = "Pick 5 words";
+        return;
+    }
+
+    connectionsFeedback.textContent = "5 selected";
 });
 
 closeBtn.addEventListener("click", () =>{
