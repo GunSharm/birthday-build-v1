@@ -24,6 +24,7 @@ let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
 let selected = []
+let solved = []
 
 
 
@@ -50,10 +51,10 @@ const episodes = [
         title: "Episode 2 | The Whole Picture", type:"Connections", tag:"Connections", runtime: "10 min", color:"#1d3557",
         teaser: "That's a lot of you in one place. Any idea how I'd fit it all on a gift?",
         groups: [
-        { name: "BIG BACK Activities", words: ["SUSHI", "BIRYANI", "RAMEN", "BURGERS", "FRIES"] },
-        { name: "DIVA Vibes", words: ["MATCHA", "COFFEE", "WHISKEY", "BEER", "DIET COKE" ] },
-        { name: "Hobbies", words: ["RUNNING", "GYM", "PICKLEBALL", "HIKING", "FOOTBALL" ] },
-        { name: "OUR Thing", words: ["COOKING", "VIDEO GAMES", "ARCADES", "ONE PIECE", "F1" ] }
+        { name: "BIG BACK Activities", words: ["SUSHI", "BIRYANI", "RAMEN", "BURGERS", "FRIES"], color: "#fff3b0" },
+        { name: "DIVA Vibes", words: ["MATCHA", "COFFEE", "WHISKEY", "BEER", "DIET COKE" ], color: "#ffc8dd" },
+        { name: "Hobbies", words: ["RUNNING", "GYM", "PICKLEBALL", "HIKING", "FOOTBALL" ], color: "#bde0fe"},
+        { name: "OUR Thing", words: ["COOKING", "VIDEO GAMES", "ARCADES", "ONE PIECE", "F1" ], color: "#cdb4db" }
     ]
 
     }
@@ -118,6 +119,8 @@ episodes.forEach((episode) => {
             currentWords = allWords;
             currentWords.sort(() => Math.random() - 0.5);
             selected = [];
+            solved = [];
+            connectionsFeedback.textContent = "";
             drawTiles();
 
             puzzle.hidden = true
@@ -143,6 +146,10 @@ submitBtn.addEventListener("click", () => {
     });
     if (match){
         connectionsFeedback.textContent = match.name;
+        solved.push(match);
+        currentWords = currentWords.filter((word) => !match.words.includes(word));
+        selected = [];
+        drawTiles();
     } else {
         connectionsFeedback.textContent = "Panda, you can do better";
     }
