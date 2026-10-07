@@ -13,6 +13,9 @@ const guessInput = document.querySelector("#guess-input")
 const guessBtn = document.querySelector("#guess-btn")
 const guessFeedback = document.querySelector("#guess-feedback")
 const board = document.querySelector("#board")
+const connections = document.querySelector("#connections")
+const connectionsTitle = document.querySelector("#connections-title")
+const closeConnections = document.querySelector("#close-connections")
 let currentEpisode= null
 let guessesUsed = 0
 
@@ -31,10 +34,24 @@ garvitBtn.addEventListener("click", () => {
 });
 
 const episodes = [
-    {title: "Episode 1 | The Opening Round", tag:"Wordle", runtime: "5 min", color:"#1d3557", answer: "GUNNERS", guesses: 7, 
-    hint1: "Born in a factory, named for what it made. Wear the red, and the cannon is your shade.", 
-    hint2: "Not the club. The nickname. Seven letters, and the crowd sings it loud."}
+    {
+        title: "Episode 1 | The Opening Round", type: "Wordle", tag:"Wordle", runtime: "5 min", color:"#1d3557", answer: "GUNNERS", guesses: 7, 
+        hint1: "Born in a factory, named for what it made. Wear the red, and the cannon is your shade.", 
+        hint2: "Not the club. The nickname. Seven letters, and the crowd sings it loud."
+    },
+    {
+        title: "Episode 2 | The Whole Picture", type:"Connections", tag:"Connections", runtime: "10 min", color:"#1d3557",
+        teaser: "That's a lot of you in one place. Any idea how I'd fit it all on a gift?",
+        groups: [
+        { name: "BIG BACK Activities", words: ["SUSHI", "BIRYANI", "RAMEN", "BURGERS", "FRIES"] },
+        { name: "DIVA Vibes", words: ["MATCHA", "COFFEE", "WHISKEY", "BEER", "DIET COKE" ] },
+        { name: "Hobbies", words: ["RUNNING", "GYM", "PICKLEBALL", "HIKING", "FOOTBALL" ] },
+        { name: "OUR Thing", words: ["COOKING", "VIDEO GAMES", "ARCADES", "ONE PIECE", "F1" ] }
+    ]
+
+    }
 ];
+console.log(episodes);
 
 episodes.forEach((episode) => {
     const card = document.createElement("div");
@@ -43,21 +60,32 @@ episodes.forEach((episode) => {
     episodeRow.appendChild(card);
     card.style.backgroundColor = episode.color; 
     card.addEventListener("click", () =>{
-        puzzleTitle.textContent = episode.title;
-        puzzleHint.textContent = episode.hint1;
-        puzzle.hidden=false;
         currentEpisode = episode;
-        board.innerHTML = "";
-        guessesUsed = 0
-        guessFeedback.textContent = ""
-        guessInput.value = "" 
-        guessBtn.disabled = false
+        if (episode.type === "Wordle") {
+            puzzleTitle.textContent = episode.title;
+            puzzleHint.textContent = episode.hint1;
+            puzzle.hidden=false;
+            board.innerHTML = "";
+            guessesUsed = 0
+            guessFeedback.textContent = ""
+            guessInput.value = "" 
+            guessBtn.disabled = false
+            connections.hidden = true
+        } else {
+            connectionsTitle.textContent = episode.title;
+            connections.hidden=false;
+            puzzle.hidden = true
+
+        }
     })
       
 });
 
 closeBtn.addEventListener("click", () =>{
     puzzle.hidden = true;
+});
+closeConnections.addEventListener("click", () =>{
+    connections.hidden = true;
 });
 
 guessBtn.addEventListener("click", () => {
@@ -109,5 +137,3 @@ guessBtn.addEventListener("click", () => {
     
     board.appendChild(row);
 });
-
-
