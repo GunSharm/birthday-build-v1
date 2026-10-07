@@ -18,9 +18,12 @@ const connectionsTitle = document.querySelector("#connections-title")
 const closeConnections = document.querySelector("#close-connections")
 const connectionsBoard = document.querySelector("#connections-board")
 const shuffleBtn = document.querySelector("#shuffle-btn")
+const submitBtn = document.querySelector("#submit-btn")
+const connectionsFeedback = document.querySelector("#connections-feedback")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
+let selected = []
 
 
 
@@ -64,6 +67,21 @@ function drawTiles() {
         tile.className = "word-tile";
         tile.textContent = word;
         connectionsBoard.appendChild(tile);
+
+        if (selected.includes(word)){
+            tile.classList.add("selected");
+        }
+        
+        tile.addEventListener("click", () => {
+            if(selected.includes(word)){
+                selected = selected.filter((g) => g !== word);
+            } else if (selected.length < 5){
+                selected.push(word);
+            } 
+            drawTiles();
+        })
+
+
     })
 }
 
@@ -99,6 +117,7 @@ episodes.forEach((episode) => {
             
             currentWords = allWords;
             currentWords.sort(() => Math.random() - 0.5);
+            selected = [];
             drawTiles();
 
             puzzle.hidden = true
@@ -111,6 +130,22 @@ episodes.forEach((episode) => {
 shuffleBtn.addEventListener("click", () => {
     currentWords.sort(() => Math.random() - 0.5);
     drawTiles();
+});
+
+submitBtn.addEventListener("click", () => {
+    if(selected.length !==5){
+        connectionsFeedback.textContent = "Pick 5 words";
+        return;
+    }
+
+    const match = currentEpisode.groups.find((group) => {
+        return group.words.every((word) => selected.includes(word));
+    });
+    if (match){
+        connectionsFeedback.textContent = match.name;
+    } else {
+        connectionsFeedback.textContent = "Panda, you can do better";
+    }
 });
 
 closeBtn.addEventListener("click", () =>{
