@@ -33,8 +33,7 @@ garvitBtn.addEventListener("click", () => {
 const episodes = [
     {title: "Episode 1 | The Opening Round", tag:"Wordle", runtime: "5 min", color:"#1d3557", answer: "GUNNERS", guesses: 7, 
     hint1: "Born in a factory, named for what it made. Wear the red, and the cannon is your shade.", 
-    hint2: "Not the club. The nickname. Seven letters, and the crowd sings it loud.", 
-    memory: "Always gonna be wearing your jersey."}
+    hint2: "Not the club. The nickname. Seven letters, and the crowd sings it loud."}
 ];
 
 episodes.forEach((episode) => {
