@@ -17,8 +17,10 @@ const connections = document.querySelector("#connections")
 const connectionsTitle = document.querySelector("#connections-title")
 const closeConnections = document.querySelector("#close-connections")
 const connectionsBoard = document.querySelector("#connections-board")
+let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
+
 
 
 gunjanBtn.addEventListener("click", () => {
@@ -53,7 +55,16 @@ const episodes = [
     }
 ];
 
-
+function drawTiles() {
+    connectionsBoard.innerHTML = "";
+    
+    currentWords.forEach((word) => {
+        const tile = document.createElement("button");
+        tile.className = "word-tile";
+        tile.textContent = word;
+        connectionsBoard.appendChild(tile);
+    })
+}
 
 episodes.forEach((episode) => {
     const card = document.createElement("div");
@@ -84,14 +95,10 @@ episodes.forEach((episode) => {
                     allWords.push(word);
                 });
             });
-            console.log(allWords.length)
-
-            allWords.forEach((word) => {
-                const tile = document.createElement("button");
-                tile.className = "word-tile";
-                tile.textContent = word;
-                connectionsBoard.appendChild(tile);
-            })
+            
+            currentWords = allWords;
+            currentWords.sort(() => Math.random() - 0.5);
+            drawTiles();
 
             puzzle.hidden = true
 
