@@ -17,6 +17,7 @@ const connections = document.querySelector("#connections")
 const connectionsTitle = document.querySelector("#connections-title")
 const closeConnections = document.querySelector("#close-connections")
 const connectionsBoard = document.querySelector("#connections-board")
+const shuffleBtn = document.querySelector("#shuffle-btn")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -105,6 +106,11 @@ episodes.forEach((episode) => {
         }
     })
       
+});
+
+shuffleBtn.addEventListener("click", () => {
+    currentWords.sort(() => Math.random() - 0.5);
+    drawTiles();
 });
 
 closeBtn.addEventListener("click", () =>{
