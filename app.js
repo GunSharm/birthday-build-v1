@@ -130,6 +130,7 @@ episodes.forEach((episode) => {
             selected = [];
             solved = [];
             connectionsFeedback.textContent = "";
+            submitBtn.disabled = false;
             drawTiles();
 
             puzzle.hidden = true
@@ -154,10 +155,14 @@ submitBtn.addEventListener("click", () => {
         return group.words.every((word) => selected.includes(word));
     });
     if (match){
-        connectionsFeedback.textContent = match.name;
         solved.push(match);
         currentWords = currentWords.filter((word) => !match.words.includes(word));
         selected = [];
+        connectionsFeedback.textContent = "";
+        if(solved.length ===  currentEpisode.groups.length) {
+            connectionsFeedback.textContent = currentEpisode.teaser;
+            submitBtn.disabled = true;
+        }
         drawTiles();
     } else {
         connectionsFeedback.textContent = "Panda, you can do better";
