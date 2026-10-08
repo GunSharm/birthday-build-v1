@@ -20,10 +20,12 @@ const connectionsBoard = document.querySelector("#connections-board")
 const shuffleBtn = document.querySelector("#shuffle-btn")
 const submitBtn = document.querySelector("#submit-btn")
 const connectionsFeedback = document.querySelector("#connections-feedback")
+const solvedBox = document.querySelector("#solved-groups")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
 let selected = []
+let solved = []
 
 
 
@@ -50,10 +52,10 @@ const episodes = [
         title: "Episode 2 | The Whole Picture", type:"Connections", tag:"Connections", runtime: "10 min", color:"#1d3557",
         teaser: "That's a lot of you in one place. Any idea how I'd fit it all on a gift?",
         groups: [
-        { name: "BIG BACK Activities", words: ["SUSHI", "BIRYANI", "RAMEN", "BURGERS", "FRIES"] },
-        { name: "DIVA Vibes", words: ["MATCHA", "COFFEE", "WHISKEY", "BEER", "DIET COKE" ] },
-        { name: "Hobbies", words: ["RUNNING", "GYM", "PICKLEBALL", "HIKING", "FOOTBALL" ] },
-        { name: "OUR Thing", words: ["COOKING", "VIDEO GAMES", "ARCADES", "ONE PIECE", "F1" ] }
+        { name: "BIG BACK Activities", words: ["SUSHI", "BIRYANI", "RAMEN", "BURGERS", "FRIES"], color: "#fff3b0" },
+        { name: "DIVA Vibes", words: ["MATCHA", "COFFEE", "WHISKEY", "BEER", "DIET COKE" ], color: "#ffc8dd" },
+        { name: "Hobbies", words: ["RUNNING", "GYM", "PICKLEBALL", "HIKING", "FOOTBALL" ], color: "#bde0fe"},
+        { name: "OUR Thing", words: ["COOKING", "VIDEO GAMES", "ARCADES", "ONE PIECE", "F1" ], color: "#cdb4db" }
     ]
 
     }
@@ -61,6 +63,15 @@ const episodes = [
 
 function drawTiles() {
     connectionsBoard.innerHTML = "";
+    solvedBox.innerHTML = "";
+
+    solved.forEach((group) => {
+        const banner = document.createElement("div");
+        banner.className = "solved-banner";
+        banner.style.backgroundColor = group.color;
+        banner.innerHTML = `<strong>${group.name}</strong><p>${group.words.join(", ")}</p>`;
+        solvedBox.appendChild(banner);
+    });
     
     currentWords.forEach((word) => {
         const tile = document.createElement("button");
@@ -106,7 +117,6 @@ episodes.forEach((episode) => {
         } else {
             connectionsTitle.textContent = episode.title;
             connections.hidden=false;
-            connectionsBoard.innerHTML= "";
 
             const allWords = [];
             episode.groups.forEach((group) => {
@@ -118,6 +128,9 @@ episodes.forEach((episode) => {
             currentWords = allWords;
             currentWords.sort(() => Math.random() - 0.5);
             selected = [];
+            solved = [];
+            connectionsFeedback.textContent = "";
+            submitBtn.disabled = false;
             drawTiles();
 
             puzzle.hidden = true
@@ -142,7 +155,15 @@ submitBtn.addEventListener("click", () => {
         return group.words.every((word) => selected.includes(word));
     });
     if (match){
-        connectionsFeedback.textContent = match.name;
+        solved.push(match);
+        currentWords = currentWords.filter((word) => !match.words.includes(word));
+        selected = [];
+        connectionsFeedback.textContent = "";
+        if(solved.length ===  currentEpisode.groups.length) {
+            connectionsFeedback.textContent = currentEpisode.teaser;
+            submitBtn.disabled = true;
+        }
+        drawTiles();
     } else {
         connectionsFeedback.textContent = "Panda, you can do better";
     }
