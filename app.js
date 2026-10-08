@@ -20,6 +20,7 @@ const connectionsBoard = document.querySelector("#connections-board")
 const shuffleBtn = document.querySelector("#shuffle-btn")
 const submitBtn = document.querySelector("#submit-btn")
 const connectionsFeedback = document.querySelector("#connections-feedback")
+const solvedBox = document.querySelector("#solved-groups")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -62,6 +63,15 @@ const episodes = [
 
 function drawTiles() {
     connectionsBoard.innerHTML = "";
+    solvedBox.innerHTML = "";
+
+    solved.forEach((group) => {
+        const banner = document.createElement("div");
+        banner.className = "solved-banner";
+        banner.style.backgroundColor = group.color;
+        banner.innerHTML = `<strong>${group.name}</strong><p>${group.words.join(", ")}</p>`;
+        solvedBox.appendChild(banner);
+    });
     
     currentWords.forEach((word) => {
         const tile = document.createElement("button");
@@ -107,7 +117,6 @@ episodes.forEach((episode) => {
         } else {
             connectionsTitle.textContent = episode.title;
             connections.hidden=false;
-            connectionsBoard.innerHTML= "";
 
             const allWords = [];
             episode.groups.forEach((group) => {
