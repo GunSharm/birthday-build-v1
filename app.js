@@ -22,6 +22,12 @@ const submitBtn = document.querySelector("#submit-btn")
 const connectionsFeedback = document.querySelector("#connections-feedback")
 const solvedBox = document.querySelector("#solved-groups")
 const hintBtn = document.querySelector("#hint-btn")
+const crossword = document.querySelector("#crossword")
+const crosswordTitle = document.querySelector("#crossword-title")
+const clueList = document.querySelector("#clue-list")
+const crosswordFeedback = document.querySelector("#crossword-feedback")
+const goldTiles = document.querySelector("#gold-tiles")
+const closeCrossword = document.querySelector("#close-crossword")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -77,6 +83,12 @@ const episodes = [
     }
 ];
 
+function hideAll() {
+    puzzle.hidden = true;
+    connections.hidden = true;
+    crossword.hidden = true;
+}
+
 function drawTiles() {
     connectionsBoard.innerHTML = "";
     solvedBox.innerHTML = "";
@@ -120,6 +132,7 @@ episodes.forEach((episode) => {
     card.style.backgroundColor = episode.color; 
     card.addEventListener("click", () =>{
         currentEpisode = episode;
+        hideAll();
         if (episode.type === "Wordle") {
             puzzleTitle.textContent = episode.title;
             puzzleHint.textContent = episode.hint1;
@@ -129,8 +142,7 @@ episodes.forEach((episode) => {
             guessFeedback.textContent = ""
             guessInput.value = "" 
             guessBtn.disabled = false
-            connections.hidden = true
-        } else {
+        } else if (episode.type === "Connections") {
             connectionsTitle.textContent = episode.title;
             connections.hidden=false;
 
@@ -149,8 +161,9 @@ episodes.forEach((episode) => {
             submitBtn.disabled = false;
             drawTiles();
 
-            puzzle.hidden = true
-
+        } else {
+            crosswordTitle.textContent = episode.title;
+            crossword.hidden = false;
         }
     })
       
@@ -198,6 +211,10 @@ closeBtn.addEventListener("click", () =>{
 closeConnections.addEventListener("click", () =>{
     connections.hidden = true;
 });
+closeCrossword.addEventListener("click", () =>{
+    crossword.hidden = true;
+});
+
 
 guessBtn.addEventListener("click", () => {
     const typed = guessInput.value.toUpperCase();
