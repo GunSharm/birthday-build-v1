@@ -33,6 +33,7 @@ let currentEpisode= null
 let guessesUsed = 0
 let selected = []
 let solved = []
+let cluesSolved = 0
 
 
 
@@ -69,19 +70,23 @@ const episodes = [
         title: "Episode 3 | The Gold Rush", type: "Crossword", tag:"Crossword", runtime: "15 min", color:"#0f4c5c", 
         teaser: "Something golden is hiding in here, Panda. Untangle it.",
         clues: [
-        { clue: "What I call you", answers: ["PANDA"], gold: "A" },
-        { clue: "Our go-to takeout", answers: ["SUSHI"], gold: "I" },
-        {clue: "What you make that's an absolute banger", answers: ["BIRYANI"], gold: "R"},
-        {clue: "The only kitchen where neither of us gets to cook", answers: ["PICKLEBALL"], gold: "P"},
-        {clue: "Nothing happened.", answers: ["ONEPIECE"], gold: "O"},
-        {clue: "______ to Survive", answers: ["DRIVE"], gold: "D"},
-        {clue: "Always gonna wear your team's jersey", answers: ["ARSENAL"], gold: "S"},
-        {clue: "In every other universe Gwen Stacy falls for _______", answers: ["SPIDERMAN"], gold: "M"},
-        {clue: "Where most of our weekends end up and you always end up losing to me", answers: ["ARCADES"], gold: "A"},
-        {clue: "Mortal Kombat on ____, Pushups and Whiskey?", answers: ["XBOX"], gold: "X"}
+            {clue: "What you make that's an absolute banger", answers: ["BIRYANI"], gold: "3"},
+            {clue: "Mortal Kombat on ____, Pushups and Whiskey?", answers: ["XBOX"], gold: "1"},
+            { clue: "What I call you", answers: ["PANDA"], gold: "2" },
+            {clue: "Always gonna wear your team's jersey", answers: ["ARSENAL"], gold: "3"},
+            {clue: "In every other universe Gwen Stacy falls for _______", answers: ["SPIDERMAN"], gold: "7"},
+            { clue: "Our go-to takeout", answers: ["SUSHI"], gold: "5" },
+            {clue: "The only kitchen where neither of us gets to cook", answers: ["PICKLEBALL"], gold: "1"},
+            {clue: "Where most of our weekends end up and you always end up losing to me", answers: ["ARCADES"], gold: "1"},
+            {clue: "______ to Survive", answers: ["DRIVE"], gold: "1"},
+            {clue: "Nothing happened.", answers: ["ONEPIECE"], gold: "1"}       
     ]
     }
 ];
+
+function clean(text) {
+    return text.toUpperCase().replace(/[^A-Z0-9]/g, "");
+}
 
 function hideAll() {
     puzzle.hidden = true;
@@ -164,6 +169,27 @@ episodes.forEach((episode) => {
         } else {
             crosswordTitle.textContent = episode.title;
             crossword.hidden = false;
+            clueList.innerHTML = "";
+            episode.clues.forEach((clue, i) => {
+                const row = document.createElement("div");
+                row.className = "clue-row";
+                const label = document.createElement("p");
+                label.textContent = `${i + 1}. ${clue.clue}`;
+                const box = document.createElement("input");
+                box.addEventListener("input", () => {
+                    if (clue.answers.includes(clean(box.value))){
+                        box.disabled = true;
+                        row.classList.add("done");
+                        cluesSolved++;
+                    }
+                });
+                row.appendChild(label);
+                row.appendChild(box);
+                clueList.appendChild(row);
+            });
+            
+            cluesSolved = 0;
+            crosswordFeedback.textContent = "";
         }
     })
       
