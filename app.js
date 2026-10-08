@@ -58,7 +58,22 @@ const episodes = [
         { name: "Hobbies", words: ["RUNNING", "GYM", "PICKLEBALL", "HIKING", "FOOTBALL" ], color: "#bde0fe"},
         { name: "OUR Thing", words: ["COOKING", "VIDEO GAMES", "ARCADES", "ONE PIECE", "F1" ], color: "#cdb4db" }
     ]
-
+    },
+    {
+        title: "Episode 3 | The Gold Rush", type: "Crossword", tag:"Crossword", runtime: "15 min", color:"#0f4c5c", 
+        teaser: "Something golden is hiding in here, Panda. Untangle it.",
+        clues: [
+        { clue: "What I call you", answers: ["PANDA"], gold: "A" },
+        { clue: "Our go-to takeout", answers: ["SUSHI"], gold: "I" },
+        {clue: "What you make that's an absolute banger", answers: ["BIRYANI"], gold: "R"},
+        {clue: "The only kitchen where neither of us gets to cook", answers: ["PICKLEBALL"], gold: "P"},
+        {clue: "Nothing happened.", answers: ["ONEPIECE"], gold: "O"},
+        {clue: "______ to Survive", answers: ["DRIVE"], gold: "D"},
+        {clue: "Always gonna wear your team's jersey", answers: ["ARSENAL"], gold: "S"},
+        {clue: "In every other universe Gwen Stacy falls for _______", answers: ["SPIDERMAN"], gold: "M"},
+        {clue: "Where most of our weekends end up and you always end up losing to me", answers: ["ARCADES"], gold: "A"},
+        {clue: "Mortal Kombat on ____, Pushups and Whiskey?", answers: ["XBOX"], gold: "X"}
+    ]
     }
 ];
 
