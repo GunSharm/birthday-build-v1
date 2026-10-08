@@ -21,6 +21,7 @@ const shuffleBtn = document.querySelector("#shuffle-btn")
 const submitBtn = document.querySelector("#submit-btn")
 const connectionsFeedback = document.querySelector("#connections-feedback")
 const solvedBox = document.querySelector("#solved-groups")
+const hintBtn = document.querySelector("#hint-btn")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -143,6 +144,13 @@ episodes.forEach((episode) => {
 shuffleBtn.addEventListener("click", () => {
     currentWords.sort(() => Math.random() - 0.5);
     drawTiles();
+});
+
+hintBtn.addEventListener("click", () => {
+    const nextGroup = currentEpisode.groups.find((s) => !solved.includes(s));
+    if (nextGroup) {
+        connectionsFeedback.textContent = "Stuck already, Panda? Try finding " + nextGroup.name;
+    }
 });
 
 submitBtn.addEventListener("click", () => {
