@@ -208,8 +208,8 @@ body {
 
 .clue-row {
     max-width: 700px;
-    margin: 0 auto 12px;
-    padding: 12px;
+    margin: 0 0 8px;
+    padding: 8px 12px;
     border-radius: 10px;
     background-color: var(--surface);
 }
@@ -222,7 +222,7 @@ body {
 .clue-row input {
     font-size: 120%;
     padding: 6px;
-    width: 90%;
+    width: 100%;
     text-transform: uppercase;
     letter-spacing: 6px;
     font-family: monospace;
@@ -231,11 +231,13 @@ body {
     background-color: transparent;
     color: whitesmoke;
     text-align: center;
+    box-sizing: border-box;
 }
 
 .clue-row p {
-    font-size: 150%;
+    font-size: 115%;
     border: 2px solid var(--gold);
+    margin: 0 0 6px;
 }
 
 input {
@@ -257,7 +259,8 @@ main button {
     display: grid;
     grid-template-columns: repeat(16, minmax(0, 1fr));
     gap: 3px;
-    margin: 10px 0;
+    margin: 0;
+    flex: 1;
 }
 
 .cw-cell {
@@ -265,10 +268,47 @@ main button {
     border: 1px solid var(--border);
     background-color: var(--surface-2);
     border-radius: 4px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 130%; 
+    color: var(--text); 
+    font-family: 'Bebas Neue', sans-serif;
 }
 
 
 .cw-cell.empty {
     border: none;
     background-color: transparent;
+}
+
+#crossword-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+#crossword-grid {
+    position: sticky;
+    top: 20px;
+    align-self: start;
+}
+
+.cw-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.cw-num {
+    width: 24px;
+    text-align: right;
+}
+
+.cw-cell.filled {
+    background-color: #2f5d50;
 }

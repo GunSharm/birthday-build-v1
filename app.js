@@ -28,12 +28,14 @@ const clueList = document.querySelector("#clue-list")
 const crosswordFeedback = document.querySelector("#crossword-feedback")
 const goldTiles = document.querySelector("#gold-tiles")
 const closeCrossword = document.querySelector("#close-crossword")
+const crosswordGrid = document.querySelector("#crossword-grid")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
 let selected = []
 let solved = []
 let cluesSolved = 0
+let goldCells =[]
 
 
 
@@ -170,17 +172,25 @@ episodes.forEach((episode) => {
             crosswordTitle.textContent = episode.title;
             crossword.hidden = false;
             clueList.innerHTML = "";
-            episode.clues.forEach((clue, i) => {
-                const row = document.createElement("div");
-                row.className = "clue-row";
-                
-                const label = document.createElement("p");
-                label.textContent = `${i + 1}. ${clue.clue}`;
+            crosswordGrid.innerHTML = "";
+            goldTiles.innerHTML = "";
+            goldCells = [];
+            cluesSolved = 0;
+            crosswordFeedback.textContent = "";
 
+            episode.clues.forEach((clue, i) => {
                 const answer = clue.answers[0];
                 const offset = 7-clue.gold;
+                const cells = [];
+
+                const gridRow = document.createElement("div");
+                gridRow.className = "cw-row";
+                const num = document.createElement("span");
+                num.className = "cw-num";
+                num.textContent = i+1;
                 const grid = document.createElement("div");
                 grid.className = "cw-grid";
+
                 for (let c = 0; c < 16; c++) {
                     const cell = document.createElement("div");
                     const pos = c - offset;
@@ -188,26 +198,37 @@ episodes.forEach((episode) => {
                         cell.className = "cw-cell empty";
                     } else {
                         cell.className = "cw-cell";
+                        cells.push(cell);
+                        if(pos === clue.gold - 1){
+                            goldCells.push(cell);
+                        }
                     }
                     grid.appendChild(cell);
                 }
+                gridRow.appendChild(num);
+                gridRow.appendChild(grid);
+                crosswordGrid.appendChild(gridRow);
 
-                const box = document.createElement("input");
+                const item = document.createElement("div");
+                item.className = "clue-row";
+                const label = document.createElement("p");
+                label.textContent = `${i + 1}. ${clue.clue}`;
+                const box = document.createElement("input");                
                 box.addEventListener("input", () => {
                     if (clue.answers.includes(clean(box.value))){
                         box.disabled = true;
-                        row.classList.add("done");
+                        item.classList.add("done")
+                        cells.forEach((cell,k) => {
+                            cell.textContent = answer[k];
+                            cell.classList.add("filled");
+                        })
                         cluesSolved++;
                     }
                 });
-                row.appendChild(label);
-                row.appendChild(grid);
-                row.appendChild(box);
-                clueList.appendChild(row);
+                item.appendChild(label);
+                item.appendChild(box);
+                clueList.appendChild(item);
             });
-            
-            cluesSolved = 0;
-            crosswordFeedback.textContent = "";
         }
     })
       
