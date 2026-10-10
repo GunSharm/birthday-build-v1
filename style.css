@@ -252,3 +252,23 @@ main button {
     padding: 8px 14px;
     cursor: pointer;
 }
+
+.cw-grid {
+    display: grid;
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    gap: 3px;
+    margin: 10px 0;
+}
+
+.cw-cell {
+    aspect-ratio: 1;
+    border: 1px solid var(--border);
+    background-color: var(--surface-2);
+    border-radius: 4px;
+}
+
+
+.cw-cell.empty {
+    border: none;
+    background-color: transparent;
+}
