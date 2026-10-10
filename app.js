@@ -223,6 +223,15 @@ episodes.forEach((episode) => {
                             cell.classList.add("filled");
                         })
                         cluesSolved++;
+                    if(cluesSolved === currentEpisode.clues.length){
+                        crosswordFeedback.textContent = episode.teaser;
+                        goldCells.forEach((cell) => {
+                            cell.classList.add("gold")
+                        });
+                        const letters = goldCells.map((cell) => cell.textContent);
+                        letters.sort(() => Math.random() - 0.5);
+                    console.log(letters);
+                    }
                     }
                 });
                 item.appendChild(label);
