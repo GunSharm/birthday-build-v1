@@ -84,8 +84,8 @@ const episodes = [
             {clue: "Nothing happened.", answers: ["ONEPIECE"], gold: 1}       
     ]
     },
-    { title: "Episode 4 | Full Time", tag: "Coming soon", runtime: "soon", color: "#2a2a35", locked: true },
-    { title: "Episode 5 | The Finale", tag: "Coming soon", runtime: "soon", color: "#2a2a35", locked: true }
+    { title: "Episode 4 | Full Time", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35", locked: true },
+    { title: "Episode 5 | The Finale", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35", locked: true }
 ];
 
 function clean(text) {
@@ -133,8 +133,13 @@ function drawTiles() {
     })
 }
 
+function markWatched(ep){
+    ep.card.classList.add("watched");
+}
+
 episodes.forEach((episode) => {
     const card = document.createElement("div");
+    episode.card = card;
     card.innerHTML = `<h3>${episode.title}</h3><p>${episode.tag} | ${episode.runtime}</p>`;
     card.className = "card";
     episodeRow.appendChild(card);
@@ -233,6 +238,7 @@ episodes.forEach((episode) => {
                         cluesSolved++;
                     if(cluesSolved === currentEpisode.clues.length){
                         crosswordFeedback.textContent = episode.teaser;
+                        markWatched(currentEpisode);
                         goldCells.forEach((cell) => {
                             cell.classList.add("gold")
                         });
@@ -285,6 +291,7 @@ submitBtn.addEventListener("click", () => {
         if(solved.length ===  currentEpisode.groups.length) {
             connectionsFeedback.textContent = currentEpisode.teaser;
             submitBtn.disabled = true;
+            markWatched(currentEpisode);
         }
         drawTiles();
     } else {
@@ -315,6 +322,7 @@ guessBtn.addEventListener("click", () => {
     }
     if (typed === currentEpisode.answer) {
         guessFeedback.textContent = "Any idea on the gift now?";
+        markWatched(currentEpisode);
         
     } else if (guessesUsed === currentEpisode.guesses){
         guessFeedback.textContent = " Panda, its done :("
