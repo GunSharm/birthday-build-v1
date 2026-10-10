@@ -349,3 +349,10 @@ main button {
     cursor: default;
     border: 2px dashed var(--border);
 }
+
+.card.watched::after {
+    content: "Watched";
+    display: block;
+    margin-top: 40px;
+    color: #46d369;
+}
