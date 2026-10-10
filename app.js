@@ -230,7 +230,12 @@ episodes.forEach((episode) => {
                         });
                         const letters = goldCells.map((cell) => cell.textContent);
                         letters.sort(() => Math.random() - 0.5);
-                    console.log(letters);
+                        letters.forEach((letter) => {
+                            const badge = document.createElement("div");
+                            badge.className = "gold-tile";
+                            badge.textContent = letter;
+                            goldTiles.appendChild(badge);
+                        })
                     }
                     }
                 });

@@ -324,9 +324,13 @@ main button {
     justify-content: center;
     margin: 4px;
     border-radius: 8px;
-    background-color:  gold; 
+    background-color: var(--gold); 
     font-family: 'Bebas Neue', sans-serif;
     font-size: 150%;
+    width: 52px; 
+    height: 52px;
+    color: #1a1a22;
+
 }
 
 #gold-tiles {
@@ -338,3 +342,4 @@ main button {
     font-size: 150%;
     text-align: center;
 }
+
