@@ -22,11 +22,20 @@ const submitBtn = document.querySelector("#submit-btn")
 const connectionsFeedback = document.querySelector("#connections-feedback")
 const solvedBox = document.querySelector("#solved-groups")
 const hintBtn = document.querySelector("#hint-btn")
+const crossword = document.querySelector("#crossword")
+const crosswordTitle = document.querySelector("#crossword-title")
+const clueList = document.querySelector("#clue-list")
+const crosswordFeedback = document.querySelector("#crossword-feedback")
+const goldTiles = document.querySelector("#gold-tiles")
+const closeCrossword = document.querySelector("#close-crossword")
+const crosswordGrid = document.querySelector("#crossword-grid")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
 let selected = []
 let solved = []
+let cluesSolved = 0
+let goldCells =[]
 
 
 
@@ -58,9 +67,34 @@ const episodes = [
         { name: "Hobbies", words: ["RUNNING", "GYM", "PICKLEBALL", "HIKING", "FOOTBALL" ], color: "#bde0fe"},
         { name: "OUR Thing", words: ["COOKING", "VIDEO GAMES", "ARCADES", "ONE PIECE", "F1" ], color: "#cdb4db" }
     ]
-
+    },
+    {
+        title: "Episode 3 | The Gold Rush", type: "Crossword", tag:"Crossword", runtime: "15 min", color:"#0f4c5c", 
+        teaser: "Something golden is hiding in here, Panda. Untangle it.",
+        clues: [
+            {clue: "What you make that's an absolute banger", answers: ["BIRYANI"], gold: 3},
+            {clue: "Mortal Kombat on ____, Pushups and Whiskey?", answers: ["XBOX"], gold: 1},
+            { clue: "What I call you", answers: ["PANDA"], gold: 2 },
+            {clue: "Always gonna wear your team's jersey", answers: ["ARSENAL"], gold: 3},
+            {clue: "In every other universe Gwen Stacy falls for _______", answers: ["SPIDERMAN"], gold: 7},
+            { clue: "Our go-to takeout", answers: ["SUSHI"], gold: 5 },
+            {clue: "The only kitchen where neither of us gets to cook", answers: ["PICKLEBALL"], gold: 1},
+            {clue: "Where most of our weekends end up and you always end up losing to me", answers: ["ARCADES"], gold: 1},
+            {clue: "______ to Survive", answers: ["DRIVE"], gold: 1},
+            {clue: "Nothing happened.", answers: ["ONEPIECE"], gold: 1}       
+    ]
     }
 ];
+
+function clean(text) {
+    return text.toUpperCase().replace(/[^A-Z0-9]/g, "");
+}
+
+function hideAll() {
+    puzzle.hidden = true;
+    connections.hidden = true;
+    crossword.hidden = true;
+}
 
 function drawTiles() {
     connectionsBoard.innerHTML = "";
@@ -105,6 +139,7 @@ episodes.forEach((episode) => {
     card.style.backgroundColor = episode.color; 
     card.addEventListener("click", () =>{
         currentEpisode = episode;
+        hideAll();
         if (episode.type === "Wordle") {
             puzzleTitle.textContent = episode.title;
             puzzleHint.textContent = episode.hint1;
@@ -114,8 +149,7 @@ episodes.forEach((episode) => {
             guessFeedback.textContent = ""
             guessInput.value = "" 
             guessBtn.disabled = false
-            connections.hidden = true
-        } else {
+        } else if (episode.type === "Connections") {
             connectionsTitle.textContent = episode.title;
             connections.hidden=false;
 
@@ -134,8 +168,81 @@ episodes.forEach((episode) => {
             submitBtn.disabled = false;
             drawTiles();
 
-            puzzle.hidden = true
+        } else {
+            crosswordTitle.textContent = episode.title;
+            crossword.hidden = false;
+            clueList.innerHTML = "";
+            crosswordGrid.innerHTML = "";
+            goldTiles.innerHTML = "";
+            goldCells = [];
+            cluesSolved = 0;
+            crosswordFeedback.textContent = "";
 
+            episode.clues.forEach((clue, i) => {
+                const answer = clue.answers[0];
+                const offset = 7-clue.gold;
+                const cells = [];
+
+                const gridRow = document.createElement("div");
+                gridRow.className = "cw-row";
+                const num = document.createElement("span");
+                num.className = "cw-num";
+                num.textContent = i+1;
+                const grid = document.createElement("div");
+                grid.className = "cw-grid";
+
+                for (let c = 0; c < 16; c++) {
+                    const cell = document.createElement("div");
+                    const pos = c - offset;
+                    if (pos < 0 || pos >=answer.length) {
+                        cell.className = "cw-cell empty";
+                    } else {
+                        cell.className = "cw-cell";
+                        cells.push(cell);
+                        if(pos === clue.gold - 1){
+                            goldCells.push(cell);
+                        }
+                    }
+                    grid.appendChild(cell);
+                }
+                gridRow.appendChild(num);
+                gridRow.appendChild(grid);
+                crosswordGrid.appendChild(gridRow);
+
+                const item = document.createElement("div");
+                item.className = "clue-row";
+                const label = document.createElement("p");
+                label.textContent = `${i + 1}. ${clue.clue}`;
+                const box = document.createElement("input");                
+                box.addEventListener("input", () => {
+                    if (clue.answers.includes(clean(box.value))){
+                        box.disabled = true;
+                        item.classList.add("done")
+                        cells.forEach((cell,k) => {
+                            cell.textContent = answer[k];
+                            cell.classList.add("filled");
+                        })
+                        cluesSolved++;
+                    if(cluesSolved === currentEpisode.clues.length){
+                        crosswordFeedback.textContent = episode.teaser;
+                        goldCells.forEach((cell) => {
+                            cell.classList.add("gold")
+                        });
+                        const letters = goldCells.map((cell) => cell.textContent);
+                        letters.sort(() => Math.random() - 0.5);
+                        letters.forEach((letter) => {
+                            const badge = document.createElement("div");
+                            badge.className = "gold-tile";
+                            badge.textContent = letter;
+                            goldTiles.appendChild(badge);
+                        })
+                    }
+                    }
+                });
+                item.appendChild(label);
+                item.appendChild(box);
+                clueList.appendChild(item);
+            });
         }
     })
       
@@ -183,6 +290,10 @@ closeBtn.addEventListener("click", () =>{
 closeConnections.addEventListener("click", () =>{
     connections.hidden = true;
 });
+closeCrossword.addEventListener("click", () =>{
+    crossword.hidden = true;
+});
+
 
 guessBtn.addEventListener("click", () => {
     const typed = guessInput.value.toUpperCase();

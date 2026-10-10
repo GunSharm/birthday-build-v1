@@ -1,3 +1,12 @@
+:root {
+    --bg: #0d0d12;
+    --surface: #1a1a22;
+    --surface-2: #272733;
+    --border: #3a3a48;
+    --text: #ece4d4;
+    --gold: #c8b653;
+}
+
 body {
     background-color: black;
   }
@@ -42,9 +51,9 @@ body {
     align-items: center;    /* Centers items horizontally */
     justify-content: center;
     padding: 12px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid var(--border);
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: var(--surface-2);
     cursor: pointer;
     transition: all 0.2s ease;
     min-width: 80px;
@@ -53,7 +62,7 @@ body {
 /* Hover and active states for the button */
 .color-btn:hover {
     border-color: #a0a0a0;
-    background-color: #f9f9f9;
+    background-color: var(--surface);
     transform: translateY(-2px);
 }
 
@@ -87,7 +96,7 @@ body {
     font-family: sans-serif;
     font-size: 14px;
     font-weight: 500;
-    color: #333333;
+    color: var(--text);
 }
 
 #message {
@@ -160,8 +169,8 @@ body {
 
 .word-tile {
     padding: 10px;
-    background-color: lavenderblush;
-    color: darkblue;
+    background-color: var(--surface-2);
+    color: var(--text);
     border-radius: 10px;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 150%;
@@ -169,8 +178,8 @@ body {
 }
 
 .word-tile.selected {
-    background-color:  #b7e4c7;
-    color: #6f4e37;
+    background-color: #3d8b7d;
+    color: var(--text);
 }
 
 .connections-buttons {
@@ -191,7 +200,146 @@ body {
     color:#4e342e;
     font-family:'Bebas Neue', sans-serif ;
     font-size: 150%;
+    filter: brightness(0.88);
 }
 .solved-banner p {
     margin:10px;
 }
+
+.clue-row {
+    max-width: 700px;
+    margin: 0 0 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background-color: var(--surface);
+}
+
+.clue-row.done {
+    background-color: #2f5d50;
+    color: var(--text);
+}
+
+.clue-row input {
+    font-size: 120%;
+    padding: 6px;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    font-family: monospace;
+    border: none;
+    border-bottom: 3px solid #0f4c5c;
+    background-color: transparent;
+    color: whitesmoke;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.clue-row p {
+    font-size: 115%;
+    border: 2px solid var(--gold);
+    margin: 0 0 6px;
+}
+
+input {
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+main button {
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+.cw-grid {
+    display: grid;
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    gap: 3px;
+    margin: 0;
+    flex: 1;
+}
+
+.cw-cell {
+    aspect-ratio: 1;
+    border: 1px solid var(--border);
+    background-color: var(--surface-2);
+    border-radius: 4px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 130%; 
+    color: var(--text); 
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+
+.cw-cell.empty {
+    border: none;
+    background-color: transparent;
+}
+
+#crossword-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+#crossword-grid {
+    position: sticky;
+    top: 20px;
+    align-self: start;
+}
+
+.cw-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.cw-num {
+    width: 24px;
+    text-align: right;
+}
+
+.cw-cell.filled {
+    background-color: #2f5d50;
+}
+
+.cw-cell.gold {
+    background-color: var(--gold);
+    color: #1a1a22;
+}
+
+.gold-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px;
+    border-radius: 8px;
+    background-color: var(--gold); 
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 150%;
+    width: 52px; 
+    height: 52px;
+    color: #1a1a22;
+
+}
+
+#gold-tiles {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#crossword-feedback {
+    font-size: 150%;
+    text-align: center;
+}
+
