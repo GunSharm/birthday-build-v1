@@ -343,3 +343,9 @@ main button {
     text-align: center;
 }
 
+.card.locked {
+    filter: grayscale(1);
+    opacity: 0.6;
+    cursor: default;
+    border: 2px dashed var(--border);
+}
