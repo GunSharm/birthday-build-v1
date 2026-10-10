@@ -83,7 +83,9 @@ const episodes = [
             {clue: "______ to Survive", answers: ["DRIVE"], gold: 1},
             {clue: "Nothing happened.", answers: ["ONEPIECE"], gold: 1}       
     ]
-    }
+    },
+    { title: "Episode 4 | Full Time", tag: "Coming soon", runtime: "soon", color: "#2a2a35", locked: true },
+    { title: "Episode 5 | The Finale", tag: "Coming soon", runtime: "soon", color: "#2a2a35", locked: true }
 ];
 
 function clean(text) {
@@ -137,6 +139,12 @@ episodes.forEach((episode) => {
     card.className = "card";
     episodeRow.appendChild(card);
     card.style.backgroundColor = episode.color; 
+
+    if (episode.locked) {
+        card.classList.add("locked");
+        return;
+    }
+    
     card.addEventListener("click", () =>{
         currentEpisode = episode;
         hideAll();
