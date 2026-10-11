@@ -29,6 +29,7 @@ const crosswordFeedback = document.querySelector("#crossword-feedback")
 const goldTiles = document.querySelector("#gold-tiles")
 const closeCrossword = document.querySelector("#close-crossword")
 const crosswordGrid = document.querySelector("#crossword-grid")
+const playBtn = document.querySelector("#play-btn")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -128,13 +129,25 @@ function drawTiles() {
             } 
             drawTiles();
         })
-
-
     })
 }
 
 function markWatched(ep){
     ep.card.classList.add("watched");
+    updatePlay();
+}
+
+function nextEpisode() {
+    return episodes.find((ep) => !ep.locked && !ep.card.classList.contains("watched"));
+}
+
+function updatePlay() {
+    const next = nextEpisode();
+    if (next) {
+        playBtn.textContent = `Play Episode ${episodes.indexOf(next) + 1}`;
+    } else {
+        playBtn.textContent = "Watch again";
+    }
 }
 
 episodes.forEach((episode) => {
@@ -261,6 +274,7 @@ episodes.forEach((episode) => {
     })
       
 });
+updatePlay();
 
 shuffleBtn.addEventListener("click", () => {
     currentWords.sort(() => Math.random() - 0.5);
@@ -272,6 +286,11 @@ hintBtn.addEventListener("click", () => {
     if (nextGroup) {
         connectionsFeedback.textContent = "Stuck already, Panda? Try finding " + nextGroup.name;
     }
+});
+
+playBtn.addEventListener("click", () => {
+    const target = nextEpisode() || episodes[0];
+    target.card.click();
 });
 
 submitBtn.addEventListener("click", () => {

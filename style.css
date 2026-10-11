@@ -113,8 +113,16 @@ body {
     color: lavenderblush;
     font-family: 'Bebas Neue', sans-serif;
     cursor: pointer;
+    transition: transform 0.2s;
 }
 
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card.locked:hover {
+    transform: none;
+}
 
 
 #episode-row {
@@ -359,10 +367,20 @@ main button {
     margin-top: 40px;
     color: #46d369;
 }
-.card:hover {
-    transform: scale(1.05);
+
+#play-btn {
+    background-color: #ece4d4;
+    color: #0d0d12;
+    font-size: 120%;
+    padding: 10px 28px;
+    border: none;
+    border-radius: 6px;
+    margin: 16px 0 28px;
 }
 
-.card.locked:hover {
-    transform: none;
+.row-title {
+    text-align: left;
+    font-size: 150%;
+    padding: 0 20px;
+    margin: 0 0 10px;
 }
