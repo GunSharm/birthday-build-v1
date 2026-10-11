@@ -115,10 +115,13 @@ body {
     cursor: pointer;
 }
 
+
+
 #episode-row {
     display: flex;
     gap: 20px;
     overflow-x: auto;
+    padding: 10px 20px;
 }
 
 .card p {
@@ -355,4 +358,11 @@ main button {
     display: block;
     margin-top: 40px;
     color: #46d369;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card.locked:hover {
+    transform: none;
 }
