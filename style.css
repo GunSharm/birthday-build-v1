@@ -9,6 +9,7 @@
 
 body {
     background-color: black;
+    margin: 0;
   }
   h1 {
     color:#e50914;
@@ -34,6 +35,7 @@ body {
     font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 100%;
     text-align: center;
+    padding: 20px;
   }
 
   .button-container {
