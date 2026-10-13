@@ -5,6 +5,7 @@
     --border: #3a3a48;
     --text: #ece4d4;
     --gold: #c8b653;
+    --night: linear-gradient(180deg, #1c2a6b 0%, #0d1233 55%, #04061a 100%);
 }
 
 body {
@@ -224,8 +225,8 @@ body {
 
 .clue-row {
     max-width: 700px;
-    margin: 0 0 8px;
-    padding: 8px 12px;
+    margin: 0 0 6px;
+    padding: 6px 12px; 
     border-radius: 10px;
     background-color: var(--surface);
 }
@@ -237,7 +238,7 @@ body {
 
 .clue-row input {
     font-size: 120%;
-    padding: 6px;
+    padding: 2px;
     width: 100%;
     text-transform: uppercase;
     letter-spacing: 6px;
@@ -252,8 +253,7 @@ body {
 
 .clue-row p {
     font-size: 115%;
-    border: 2px solid var(--gold);
-    margin: 0 0 6px;
+    margin: 0 0 4px;
 }
 
 input {
@@ -399,7 +399,7 @@ main button {
     justify-content: flex-start;
     padding-top: 24vh;
     box-sizing: border-box;
-    background: linear-gradient(180deg, #1c2a6b 0%, #0d1233 55%, #04061a 100%);
+    background: var(--night);
 }
 
 #profiles[hidden] {
@@ -449,8 +449,23 @@ main button {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(180deg, #153a73 0%, #0a1a36 55%, #030812 100%);
+    background: var(--night);
     overflow-y: auto;
     z-index: 100;
     padding: 40px 20px;
+}
+
+
+#home {
+    background: var(--night);
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+
+#close-puzzle, #close-connections, #close-crossword {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 110;
 }
