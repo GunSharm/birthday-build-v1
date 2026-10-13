@@ -13,7 +13,7 @@ body {
     margin: 0;
   }
   h1 {
-    color:#e50914;
+    color:#d4dcff;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 300%;
     text-align: center;
@@ -89,7 +89,6 @@ body {
 }
 
 .color-name {
-    font-family: 'Bebas Neue', sans-serif;
     font-size: 30px;
     color: #8a8a98;
     margin-top: 10px;
@@ -113,8 +112,8 @@ body {
 
 .card {
     padding: 12px;
-    width: 220px;
-    height: 130px;
+    width: 260px;
+    height: 170px;
     border-radius: 8px;
     color: lavenderblush;
     font-family: "Helvetica Neue", Arial, sans-serif;
@@ -131,7 +130,7 @@ body {
 }
 
 
-#episode-row {
+#episode-row, #locked-row {
     display: flex;
     gap: 20px;
     overflow-x: auto;
@@ -139,12 +138,13 @@ body {
 }
 
 .card p {
-    font-size: 100%;
+    font-size: 15px;
     color: plum;
 }
 
 .card h3 {
     margin: 0px;
+    font-size: 18px;
 }
 
 .title {
@@ -369,7 +369,7 @@ main button {
 .card.watched::after {
     content: "Watched";
     display: block;
-    margin-top: 40px;
+    margin-top: 20px;
     color: #46d369;
 }
 
