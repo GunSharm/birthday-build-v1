@@ -30,6 +30,7 @@ const goldTiles = document.querySelector("#gold-tiles")
 const closeCrossword = document.querySelector("#close-crossword")
 const crosswordGrid = document.querySelector("#crossword-grid")
 const playBtn = document.querySelector("#play-btn")
+const readyBtn = document.querySelector("#ready-btn")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -42,13 +43,20 @@ let goldCells =[]
 
 gunjanBtn.addEventListener("click", () => {
     message.textContent = "Nice try, you already know how this ends.";
+    readyBtn.hidden = true;
 });
 
 guestBtn.addEventListener("click", () => {
     message.textContent = "Guests aren't allowed here.";
+    readyBtn.hidden = true;
 });
 
 garvitBtn.addEventListener("click", () => {
+    message.textContent = "";
+    readyBtn.hidden = false;
+});
+
+readyBtn.addEventListener("click", () => {
     profiles.hidden = true;
     home.hidden = false;
 });
