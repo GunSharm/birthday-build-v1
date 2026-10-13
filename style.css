@@ -19,19 +19,19 @@ body {
   .tagline {
     color: whitesmoke;
     text-align: center;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 160%;
     letter-spacing: 1px;
   }
   h2 {
     color:whitesmoke;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 200%;
     text-align: center;
   }
   main {
     color:whitesmoke;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 100%;
     text-align: center;
   }
@@ -114,7 +114,7 @@ body {
     height: 130px;
     border-radius: 8px;
     color: lavenderblush;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     cursor: pointer;
     transition: transform 0.2s;
 }
@@ -394,8 +394,10 @@ main button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background: linear-gradient(180deg, #4a1218 0%, #1a0608 55%, #070203 100%);
+    justify-content: flex-start;
+    padding-top: 24vh;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, #1c2a6b 0%, #0d1233 55%, #04061a 100%);
 }
 
 #profiles[hidden] {
@@ -410,7 +412,7 @@ main button {
     margin: 0;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 48px;
-    color: #e50914;
+    color: #d4dcff;
     letter-spacing: 1px;
 }
 
@@ -419,4 +421,22 @@ main button {
     margin: 0 0 20px;
     letter-spacing: 1px;
     font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+
+#ready-btn {
+    margin-top: 40px;
+    padding: 14px 40px;
+    background-color: #ece4d4;
+    color: #0d0d12;
+    border: none;
+    border-radius: 6px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#ready-btn:hover {
+    background-color: #ffffff;
 }
