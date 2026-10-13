@@ -20,6 +20,8 @@ body {
     color: whitesmoke;
     text-align: center;
     font-family: 'Bebas Neue', sans-serif;
+    font-size: 160%;
+    letter-spacing: 1px;
   }
   h2 {
     color:whitesmoke;
@@ -38,7 +40,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 40px;
+    gap: 56px;
     flex-wrap: wrap;
     padding: 20px;
 }
@@ -54,8 +56,8 @@ body {
 }
 
 .avatar {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     border-radius: 8px;
     object-fit: cover;
     border: 3px solid transparent;
@@ -69,7 +71,7 @@ body {
     justify-content: center;
     background-color: var(--surface-2);
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 90px;
+    font-size: 120px;
     color: var(--border);
 }
 
@@ -85,9 +87,10 @@ body {
 
 .color-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px;
+    font-size: 30px;
     color: #8a8a98;
     margin-top: 10px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 .color-btn:hover .color-name {
@@ -96,9 +99,13 @@ body {
 
 
 #message {
-    color: whitesmoke;
+    color: var(--text);
     text-align: center;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 220%;
+    margin-top: 30px;
+    min-height: 3rem;
+
 }
 
 .card {
@@ -379,4 +386,37 @@ main button {
     font-size: 150%;
     padding: 0 20px;
     margin: 0 0 10px;
+}
+
+#profiles {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #4a1218 0%, #1a0608 55%, #070203 100%);
+}
+
+#profiles[hidden] {
+    display: none;
+    
+}
+
+.logo {
+    position: absolute;
+    top: 24px;
+    left: 36px;
+    margin: 0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: #e50914;
+    letter-spacing: 1px;
+}
+
+#profiles h2 {
+    font-size: 300%;
+    margin: 0 0 20px;
+    letter-spacing: 1px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
 }
