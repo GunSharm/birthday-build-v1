@@ -442,3 +442,15 @@ main button {
 #ready-btn:hover {
     background-color: #ffffff;
 }
+
+#puzzle, #connections, #crossword {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, #153a73 0%, #0a1a36 55%, #030812 100%);
+    overflow-y: auto;
+    z-index: 100;
+    padding: 40px 20px;
+}
