@@ -31,6 +31,7 @@ const closeCrossword = document.querySelector("#close-crossword")
 const crosswordGrid = document.querySelector("#crossword-grid")
 const playBtn = document.querySelector("#play-btn")
 const readyBtn = document.querySelector("#ready-btn")
+const lockedRow = document.querySelector("#locked-row")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -163,7 +164,7 @@ episodes.forEach((episode) => {
     episode.card = card;
     card.innerHTML = `<h3>${episode.title}</h3><p>${episode.tag} | ${episode.runtime}</p>`;
     card.className = "card";
-    episodeRow.appendChild(card);
+    (episode.locked ? lockedRow : episodeRow).appendChild(card);
     card.style.backgroundColor = episode.color; 
 
     if (episode.locked) {
