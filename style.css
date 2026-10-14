@@ -494,7 +494,7 @@ main button {
     box-shadow: 0 0 24px rgba(236, 228, 212, 0.6);
 }
 
-#puzzle, #connections, #crossword {
+#puzzle, #connections, #crossword, #trivia {
     position: fixed;
     top: 0;
     left: 0;
@@ -514,7 +514,7 @@ main button {
 }
 
 
-#close-puzzle, #close-connections, #close-crossword {
+#close-puzzle, #close-connections, #close-crossword, #close-trivia {
     position: fixed;
     top: 20px;
     left: 20px;
@@ -528,7 +528,7 @@ main button {
     transition: background-color 0.2s;
 }
 
-#close-puzzle:hover, #close-connections:hover, #close-crossword:hover {
+#close-puzzle:hover, #close-connections:hover, #close-crossword:hover, #close-trivia:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
