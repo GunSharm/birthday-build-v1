@@ -66,7 +66,8 @@ const episodes = [
     {
         title: "Episode 1 | The Opening Round", type: "Wordle", tag:"Wordle", runtime: "5 min", color:"#1d3557", answer: "GUNNERS", guesses: 7, 
         hint1: "Born in a factory, named for what it made. Wear the red, and the cannon is your shade.", 
-        hint2: "Not the club. The nickname. Seven letters, and the crowd sings it loud."
+        hint2: "Not the club. The nickname. Seven letters, and the crowd sings it loud.",
+        blurb: "Seven letters. One nickname."
     },
     {
         title: "Episode 2 | The Whole Picture", type:"Connections", tag:"Connections", runtime: "10 min", color:"#1d3557",
@@ -76,7 +77,8 @@ const episodes = [
         { name: "DIVA Vibes", words: ["MATCHA", "COFFEE", "WHISKEY", "BEER", "DIET COKE" ], color: "#ffc8dd" },
         { name: "Hobbies", words: ["RUNNING", "GYM", "PICKLEBALL", "HIKING", "FOOTBALL" ], color: "#bde0fe"},
         { name: "OUR Thing", words: ["COOKING", "VIDEO GAMES", "ARCADES", "ONE PIECE", "F1" ], color: "#cdb4db" }
-    ]
+        ],
+        blurb: "Twenty words. Four groups."
     },
     {
         title: "Episode 3 | The Gold Rush", type: "Crossword", tag:"Crossword", runtime: "15 min", color:"#0f4c5c", 
@@ -92,7 +94,8 @@ const episodes = [
             {clue: "Where most of our weekends end up and you always end up losing to me", answers: ["ARCADES"], gold: 1},
             {clue: "______ to Survive", answers: ["DRIVE"], gold: 1},
             {clue: "Nothing happened.", answers: ["ONEPIECE"], gold: 1}       
-    ]
+            ],
+            blurb: "Something golden is hiding."
     },
     { title: "Episode 4 | Full Time", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35", locked: true },
     { title: "Episode 5 | The Finale", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35", locked: true }
@@ -159,10 +162,10 @@ function updatePlay() {
     }
 }
 
-episodes.forEach((episode) => {
+episodes.forEach((episode,i) => {
     const card = document.createElement("div");
     episode.card = card;
-    card.innerHTML = `<h3>${episode.title}</h3><p>${episode.tag} | ${episode.runtime}</p>`;
+    card.innerHTML = `<span class="ep-num">${i + 1}</span><h3>${episode.title}</h3><p>${episode.tag} | ${episode.runtime}</p><p class="blurb">${episode.blurb || ""}</p>`;
     card.className = "card";
     (episode.locked ? lockedRow : episodeRow).appendChild(card);
     card.style.backgroundColor = episode.color; 
