@@ -97,12 +97,129 @@ const episodes = [
             ],
             blurb: "Something golden is hiding."
     },
-    { title: "Episode 4 | Full Time", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35", locked: true },
+    {
+        title: "Episode 4 | Full Time", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35", locked: true,
+        type: "Trivia",
+        target: 20,
+        perPrompt: 3,
+        teaser: "Full time, Panda. Now you need something to wear on matchday.",
+        retry: "Not enough yet, Panda. There are more names in there. Go again?",
+        prompts: [
+            {
+                question: "Name a player from the 2003-04 Invincibles squad",
+                answers: [
+                    { names: ["Henry", "Thierry Henry", "Thierry", "Titi"], points: 1 },
+                    { names: ["Bergkamp", "Dennis Bergkamp", "Dennis"], points: 1 },
+                    { names: ["Vieira", "Patrick Vieira", "Patrick"], points: 1 },
+                    { names: ["Pires", "Robert Pires"], points: 1 },
+                    { names: ["Ljungberg", "Freddie Ljungberg", "Fredrik Ljungberg", "Freddie"], points: 3 },
+                    { names: ["Campbell", "Sol Campbell", "Sol"], points: 3 },
+                    { names: ["Cole", "Ashley Cole", "Ashley"], points: 3 },
+                    { names: ["Lauren", "Lauren Etame Mayer"], points: 3 },
+                    { names: ["Toure", "Kolo Toure", "Kolo"], points: 3 },
+                    { names: ["Lehmann", "Jens Lehmann", "Jens"], points: 3 },
+                    { names: ["Gilberto", "Gilberto Silva", "Silva"], points: 3 },
+                    { names: ["Keown", "Martin Keown"], points: 3 },
+                    { names: ["Clichy", "Gael Clichy"], points: 3 },
+                    { names: ["Edu"], points: 3 },
+                    { names: ["Parlour", "Ray Parlour"], points: 3 },
+                    { names: ["Reyes", "Jose Antonio Reyes", "Jose Reyes"], points: 3 },
+                    { names: ["Kanu", "Nwankwo Kanu"], points: 3 },
+                    { names: ["Wiltord", "Sylvain Wiltord", "Sylvain"], points: 3 },
+                    { names: ["Fabregas", "Cesc Fabregas", "Cesc"], points: 5 },
+                    { names: ["Cygan", "Pascal Cygan"], points: 5 },
+                    { names: ["Jeffers", "Francis Jeffers"], points: 5 },
+                    { names: ["Hoyte", "Justin Hoyte"], points: 5 },
+                    { names: ["Stack", "Graham Stack"], points: 5 },
+                    { names: ["Owusu-Abeyie", "Quincy Owusu-Abeyie", "Quincy"], points: 5 },
+                    { names: ["Simek", "Frankie Simek", "Frank Simek"], points: 5 }
+                ]
+            },
+            {
+                question: "Name an Arsenal manager (caretakers count)",
+                answers: [
+                    { names: ["Wenger", "Arsene Wenger", "Arsene"], points: 1 },
+                    { names: ["Arteta", "Mikel Arteta", "Mikel"], points: 1 },
+                    { names: ["Emery", "Unai Emery", "Unai"], points: 1 },
+                    { names: ["Graham", "George Graham"], points: 1 },
+                    { names: ["Chapman", "Herbert Chapman", "Herbert"], points: 3 },
+                    { names: ["Mee", "Bertie Mee", "Bertie"], points: 3 },
+                    { names: ["Neill", "Terry Neill"], points: 3 },
+                    { names: ["Howe", "Don Howe"], points: 3 },
+                    { names: ["Whittaker", "Tom Whittaker"], points: 3 },
+                    { names: ["Allison", "George Allison"], points: 3 },
+                    { names: ["Rioch", "Bruce Rioch"], points: 3 },
+                    { names: ["Rice", "Pat Rice"], points: 3 },
+                    { names: ["Ljungberg", "Freddie Ljungberg", "Freddie"], points: 3 },
+                    { names: ["Houston", "Stewart Houston"], points: 5 },
+                    { names: ["Wright", "Billy Wright"], points: 5 },
+                    { names: ["Swindin", "George Swindin"], points: 5 },
+                    { names: ["Shaw", "Joe Shaw"], points: 5 },
+                    { names: ["Knighton", "Leslie Knighton"], points: 5 },
+                    { names: ["Kelso", "Phil Kelso"], points: 5 },
+                    { names: ["Morrell", "George Morrell"], points: 5 },
+                    { names: ["Bradshaw", "Harry Bradshaw"], points: 5 },
+                    { names: ["Hollis", "Sam Hollis"], points: 5 }
+                ]
+            },
+            {
+                question: "Name a team Arsenal love to hate",
+                answers: [
+                    { names: ["Tottenham", "Tottenham Hotspur", "Spurs"], points: 1 },
+                    { names: ["Chelsea"], points: 1 },
+                    { names: ["Manchester United", "Man United", "Man Utd", "Man U", "MUFC"], points: 1 },
+                    { names: ["Liverpool", "LFC"], points: 3 },
+                    { names: ["Manchester City", "Man City"], points: 3 },
+                    { names: ["Newcastle", "Newcastle United", "NUFC"], points: 3 },
+                    { names: ["Leeds", "Leeds United"], points: 3 },
+                    { names: ["Everton"], points: 5 },
+                    { names: ["West Ham", "West Ham United"], points: 5 },
+                    { names: ["Crystal Palace", "Palace"], points: 5 },
+                    { names: ["Aston Villa", "Villa"], points: 5 },
+                    { names: ["Stoke", "Stoke City"], points: 5 },
+                    { names: ["Birmingham", "Birmingham City"], points: 5 }
+                ]
+            },
+            {
+                question: "Name an Arsenal striker, any era",
+                answers: [
+                    { names: ["Henry", "Thierry Henry", "Thierry", "Titi"], points: 1 },
+                    { names: ["Wright", "Ian Wright"], points: 1 },
+                    { names: ["Van Persie", "Robin van Persie", "Robin", "RVP"], points: 1 },
+                    { names: ["Giroud", "Olivier Giroud", "Olivier"], points: 1 },
+                    { names: ["Aubameyang", "Pierre-Emerick Aubameyang", "Auba"], points: 1 },
+                    { names: ["Lacazette", "Alexandre Lacazette", "Laca"], points: 1 },
+                    { names: ["Jesus", "Gabriel Jesus"], points: 1 },
+                    { names: ["Gyokeres", "Viktor Gyokeres", "Viktor"], points: 1 },
+                    { names: ["Bergkamp", "Dennis Bergkamp", "Dennis"], points: 3 },
+                    { names: ["Anelka", "Nicolas Anelka", "Nicolas"], points: 3 },
+                    { names: ["Walcott", "Theo Walcott", "Theo"], points: 3 },
+                    { names: ["Kanu", "Nwankwo Kanu"], points: 3 },
+                    { names: ["Wiltord", "Sylvain Wiltord", "Sylvain"], points: 3 },
+                    { names: ["Overmars", "Marc Overmars", "Marc"], points: 3 },
+                    { names: ["Sanchez", "Alexis Sanchez", "Alexis"], points: 3 },
+                    { names: ["Bendtner", "Nicklas Bendtner", "Nicklas"], points: 3 },
+                    { names: ["Welbeck", "Danny Welbeck", "Danny"], points: 3 },
+                    { names: ["Nketiah", "Eddie Nketiah", "Eddie"], points: 3 },
+                    { names: ["Arshavin", "Andrey Arshavin", "Andrei Arshavin", "Andrey"], points: 3 },
+                    { names: ["Bastin", "Cliff Bastin", "Cliff"], points: 5 },
+                    { names: ["Radford", "John Radford"], points: 5 },
+                    { names: ["Drake", "Ted Drake", "Ted"], points: 5 },
+                    { names: ["Brain", "Jimmy Brain"], points: 5 },
+                    { names: ["Lishman", "Doug Lishman"], points: 5 },
+                    { names: ["Hulme", "Joe Hulme"], points: 5 },
+                    { names: ["Jack", "David Jack"], points: 5 },
+                    { names: ["Lewis", "Reg Lewis"], points: 5 },
+                    { names: ["Baker", "Joe Baker"], points: 5 }
+                ]
+            }
+        ]
+    },
     { title: "Episode 5 | The Finale", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35", locked: true }
 ];
 
 function clean(text) {
-    return text.toUpperCase().replace(/[^A-Z0-9]/g, "");
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().replace(/[^A-Z0-9]/g, "");
 }
 
 function hideAll() {
