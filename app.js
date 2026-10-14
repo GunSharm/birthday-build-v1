@@ -43,6 +43,7 @@ const triviaSkip = document.querySelector("#trivia-skip")
 const triviaFeedback = document.querySelector("#trivia-feedback")
 const triviaScore = document.querySelector("#trivia-score")
 const closeTrivia = document.querySelector("#close-trivia")
+const triviaAgain = document.querySelector("#trivia-again")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -334,10 +335,34 @@ function nextPrompt() {
     }
 }
 
+function startTrivia() {
+    triviaPrompt = 0;
+    triviaFound = [];
+    triviaTotal = 0;
+    triviaFeedback.textContent = "";
+    triviaInput.hidden = false;
+    triviaBtn.hidden = false;
+    triviaSkip.hidden = false;
+    triviaAgain.hidden = true;
+    showPrompt();
+}
+
 function finishTrivia() {
-    triviaQuestion.textContent = "That's all four!";
+    triviaProgress.textContent = "Full time";
     triviaSlots.innerHTML = "";
-    triviaFeedback.textContent = `You scored ${triviaTotal}.`;
+    triviaInput.hidden = true;
+    triviaBtn.hidden = true;
+    triviaSkip.hidden = true;
+    updateScore();
+    if (triviaTotal >= currentEpisode.target) {
+        triviaQuestion.textContent = currentEpisode.teaser;
+        triviaFeedback.textContent = `You scored ${triviaTotal}.`;
+        markWatched(currentEpisode);
+    } else {
+        triviaQuestion.textContent = currentEpisode.retry;
+        triviaFeedback.textContent = `You scored ${triviaTotal} out of the ${currentEpisode.target} you need.`;
+        triviaAgain.hidden = false;
+    }
 }
 
 function submitTrivia() {
@@ -421,12 +446,8 @@ episodes.forEach((episode,i) => {
 
         } else if (episode.type === "Trivia") {
             triviaTitle.textContent = episode.title;
-            triviaPrompt = 0;
-            triviaFound = [];
-            triviaTotal = 0;
-            triviaFeedback.textContent = "";
             trivia.hidden = false;
-            showPrompt(); 
+            startTrivia();
         } else {
             crosswordTitle.textContent = episode.title;
             crossword.hidden = false;
@@ -639,3 +660,4 @@ triviaInput.addEventListener("keydown", (event) => {
 });
 
 triviaSkip.addEventListener("click", nextPrompt);
+triviaAgain.addEventListener("click", startTrivia);
