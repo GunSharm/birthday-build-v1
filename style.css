@@ -705,3 +705,41 @@ main button {
     outline: none;
     border-bottom-color: #d4dcff;
 }
+
+#trivia-progress {
+    font-size: 110%;
+    color: #8a96c8;
+    margin: 0;
+}
+
+#trivia-question {
+    font-size: 200%;
+    margin: 10px 0 20px;
+}
+
+#trivia-slots {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin: 24px 0;
+}
+
+.trivia-slot {
+    width: 220px;
+    min-height: 56px;
+    box-sizing: border-box;
+    border: 2px dashed #5a6390;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    font-size: 130%;
+    text-transform: capitalize;
+}
+
+.trivia-slot.filled {
+    border-style: solid;
+    border-color: #2f5d50;
+    background-color: #2f5d50;
+}

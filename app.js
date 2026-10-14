@@ -50,6 +50,9 @@ let selected = []
 let solved = []
 let cluesSolved = 0
 let goldCells =[]
+let triviaPrompt = 0
+let triviaFound = []
+let triviaTotal = 0
 
 
 
@@ -291,6 +294,86 @@ function updatePlay() {
     }
 }
 
+function updateScore() {
+    triviaScore.textContent = `Score: ${triviaTotal} / ${currentEpisode.target}`;
+}
+
+function showPrompt() {
+    const prompt = currentEpisode.prompts[triviaPrompt];
+    triviaProgress.textContent = `Question ${triviaPrompt + 1} of ${currentEpisode.prompts.length}`;
+    triviaQuestion.textContent = prompt.question;
+    triviaSlots.innerHTML = "";
+    for (let s = 0; s < currentEpisode.perPrompt; s++) {
+        const slot = document.createElement("div");
+        slot.className = "trivia-slot";
+        if (triviaFound[s]) {
+            slot.textContent = `${triviaFound[s].label}  +${triviaFound[s].answer.points}`;
+            slot.classList.add("filled");
+        }
+        triviaSlots.appendChild(slot);
+    }
+    updateScore();
+    triviaInput.value = "";
+    triviaInput.focus();
+}
+
+function findAnswer(typed) {
+    const prompt = currentEpisode.prompts[triviaPrompt];
+    const cleaned = clean(typed);
+    return prompt.answers.find((a) => a.names.some((n) => clean(n) === cleaned));
+}
+
+function nextPrompt() {
+    triviaPrompt++;
+    triviaFound = [];
+    triviaFeedback.textContent = "";
+    if (triviaPrompt >= currentEpisode.prompts.length) {
+        finishTrivia();
+    } else {
+        showPrompt();
+    }
+}
+
+function finishTrivia() {
+    triviaQuestion.textContent = "That's all four!";
+    triviaSlots.innerHTML = "";
+    triviaFeedback.textContent = `You scored ${triviaTotal}.`;
+}
+
+function submitTrivia() {
+    if (triviaFound.length >= currentEpisode.perPrompt) {
+        return;
+    }
+    const typed = triviaInput.value.trim();
+    if (typed === "") {
+        return;
+    }
+    const match = findAnswer(typed);
+    if (!match) {
+        triviaFeedback.textContent = `"${typed}" isn't on my list, Panda. Try another.`;
+        triviaInput.value = "";
+        return;
+    }
+    if (triviaFound.some((f) => f.answer === match)) {
+        triviaFeedback.textContent = "You already got that one.";
+        triviaInput.value = "";
+        return;
+    }
+    triviaFound.push({ answer: match, label: typed });
+    triviaTotal += match.points;
+    triviaFeedback.textContent = `${typed} counts for ${match.points}!`;
+    showPrompt();
+    if (triviaFound.length === currentEpisode.perPrompt) {
+        triviaFeedback.textContent = `${typed} counts for ${match.points}! That's three.`;
+        const promptAtStart = triviaPrompt;
+        setTimeout(() => {
+            if (triviaPrompt === promptAtStart) {
+                nextPrompt();
+            }
+        }, 1000);
+    }
+}
+
 episodes.forEach((episode,i) => {
     const card = document.createElement("div");
     episode.card = card;
@@ -338,8 +421,12 @@ episodes.forEach((episode,i) => {
 
         } else if (episode.type === "Trivia") {
             triviaTitle.textContent = episode.title;
-            triviaQuestion.textContent = episode.prompts[0].question;
-            trivia.hidden = false; 
+            triviaPrompt = 0;
+            triviaFound = [];
+            triviaTotal = 0;
+            triviaFeedback.textContent = "";
+            trivia.hidden = false;
+            showPrompt(); 
         } else {
             crosswordTitle.textContent = episode.title;
             crossword.hidden = false;
@@ -542,3 +629,13 @@ guessBtn.addEventListener("click", () => {
     guessInput.value = "";
     guessInput.focus();
 });
+
+triviaBtn.addEventListener("click", submitTrivia);
+
+triviaInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        triviaBtn.click();
+    }
+});
+
+triviaSkip.addEventListener("click", nextPrompt);
