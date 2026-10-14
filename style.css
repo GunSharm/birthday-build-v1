@@ -120,7 +120,7 @@ body {
     color: lavenderblush;
     font-family: "Helvetica Neue", Arial, sans-serif;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.2s, filter 0.2s;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -393,8 +393,20 @@ main button {
     font-size: 140%;
     padding: 14px 40px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     margin: 0;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+}
+
+#play-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.15);
+}
+
+#play-btn:active {
+    transform: scale(0.97);
 }
 
 #play-btn::before {
