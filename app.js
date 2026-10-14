@@ -73,10 +73,10 @@ const episodes = [
         title: "Episode 2 | The Whole Picture", type:"Connections", tag:"Connections", runtime: "10 min", color:"#14867f",
         teaser: "That's a lot of you in one place. Any idea how I'd fit it all on a gift?",
         groups: [
-        { name: "BIG BACK Activities", words: ["SUSHI", "BIRYANI", "RAMEN", "BURGERS", "FRIES"], color: "#fff3b0" },
-        { name: "DIVA Vibes", words: ["MATCHA", "COFFEE", "WHISKEY", "BEER", "DIET COKE" ], color: "#ffc8dd" },
-        { name: "Hobbies", words: ["RUNNING", "GYM", "PICKLEBALL", "HIKING", "FOOTBALL" ], color: "#bde0fe"},
-        { name: "OUR Thing", words: ["COOKING", "VIDEO GAMES", "ARCADES", "ONE PIECE", "F1" ], color: "#cdb4db" }
+        { name: "BIG BACK ACTIVITIES", words: ["SUSHI", "BIRYANI", "RAMEN", "BURGERS", "FRIES"], color: "#a8861f" },
+        { name: "DIVA VIBES", words: ["MATCHA", "COFFEE", "WHISKEY", "BEER", "DIET COKE" ], color: "#a8456f" },
+        { name: "HOBBIES", words: ["RUNNING", "GYM", "PICKLEBALL", "HIKING", "FOOTBALL" ], color: "#2f6bbf"},
+        { name: "OUR THING", words: ["COOKING", "VIDEO GAMES", "ARCADES", "ONE PIECE", "F1" ], color: "#7a4bb0" }
         ],
         blurb: "Twenty words. Four groups."
     },
