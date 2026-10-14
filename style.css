@@ -167,6 +167,14 @@ body {
     text-align: center;
     margin: 3px;
     color:#e0e0e0;
+    width: 56px;
+    height: 56px;
+    border: 2px solid grey;
+    border-radius: 6px;
+    line-height: 52px;
+    text-align: center;
+    margin: 3px;
+    color: #e0e0e0;
     font-size: 30px;
     font-family: 'Bebas Neue', sans-serif;
     border-radius: 6px;
