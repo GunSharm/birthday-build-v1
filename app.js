@@ -54,6 +54,7 @@ let goldCells =[]
 let triviaPrompt = 0
 let triviaFound = []
 let triviaTotal = 0
+let triviaUnknown = ""
 
 
 
@@ -113,12 +114,13 @@ const episodes = [
             blurb: "Something golden is hiding."
     },
     {
-        title: "Episode 4 | Full Time", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35",
+        title: "Episode 4 | Full Time", tag: "Trivia", runtime: "10 min", color: "#4a4fa3",
         type: "Trivia",
         target: 20,
         perPrompt: 3,
         teaser: "Full time, Panda. Now you need something to wear on matchday.",
         retry: "Not enough yet, Panda. There are more names in there. Go again?",
+        blurb: "Deep cuts score big.",
         prompts: [
             {
                 question: "Name a player from the 2003-04 Invincibles squad",
@@ -325,6 +327,7 @@ function findAnswer(typed) {
 }
 
 function nextPrompt() {
+    triviaUnknown = "";
     triviaPrompt++;
     triviaFound = [];
     triviaFeedback.textContent = "";
@@ -336,6 +339,7 @@ function nextPrompt() {
 }
 
 function startTrivia() {
+    triviaUnknown = "";
     triviaPrompt = 0;
     triviaFound = [];
     triviaTotal = 0;
@@ -365,6 +369,17 @@ function finishTrivia() {
     }
 }
 
+function checkFull() {
+    if (triviaFound.length === currentEpisode.perPrompt) {
+        const promptAtStart = triviaPrompt;
+        setTimeout(() => {
+            if (triviaPrompt === promptAtStart) {
+                nextPrompt();
+            }
+        }, 1000);
+    }
+}
+
 function submitTrivia() {
     if (triviaFound.length >= currentEpisode.perPrompt) {
         return;
@@ -375,6 +390,7 @@ function submitTrivia() {
     }
     const match = findAnswer(typed);
     if (!match) {
+        triviaUnknown = typed;
         triviaFeedback.textContent = `"${typed}" isn't on my list, Panda. Try another.`;
         triviaInput.value = "";
         return;
@@ -384,19 +400,25 @@ function submitTrivia() {
         triviaInput.value = "";
         return;
     }
+    triviaUnknown = "";
     triviaFound.push({ answer: match, label: typed });
     triviaTotal += match.points;
-    triviaFeedback.textContent = `${typed} counts for ${match.points}!`;
     showPrompt();
-    if (triviaFound.length === currentEpisode.perPrompt) {
-        triviaFeedback.textContent = `${typed} counts for ${match.points}! That's three.`;
-        const promptAtStart = triviaPrompt;
-        setTimeout(() => {
-            if (triviaPrompt === promptAtStart) {
-                nextPrompt();
-            }
-        }, 1000);
+    triviaFeedback.textContent = `${typed} counts for ${match.points}!`;
+    checkFull();
+}
+
+function refereeRuling() {
+    if (triviaUnknown === "" || triviaFound.length >= currentEpisode.perPrompt) {
+        return;
     }
+    const label = triviaUnknown;
+    triviaUnknown = "";
+    triviaFound.push({ answer: { points: 1 }, label: label });
+    triviaTotal += 1;
+    showPrompt();
+    triviaFeedback.textContent = `Referee's ruling: ${label} counts!`;
+    checkFull();
 }
 
 episodes.forEach((episode,i) => {
@@ -656,6 +678,10 @@ triviaBtn.addEventListener("click", submitTrivia);
 triviaInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         triviaBtn.click();
+    }
+    if (event.key === "=") {
+        event.preventDefault();
+        refereeRuling();
     }
 });
 
