@@ -262,6 +262,10 @@ episodes.forEach((episode,i) => {
                             cell.classList.add("filled");
                         })
                         cluesSolved++;
+                        const nextBox = clueList.querySelector("input:not(:disabled)");
+                        if (nextBox) {
+                            nextBox.focus();
+                        }
                     if(cluesSolved === currentEpisode.clues.length){
                         crosswordFeedback.textContent = episode.teaser;
                         markWatched(currentEpisode);
@@ -283,6 +287,7 @@ episodes.forEach((episode,i) => {
                 item.appendChild(box);
                 clueList.appendChild(item);
             });
+            clueList.querySelector("input").focus();
         }
     })
       
