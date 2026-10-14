@@ -359,6 +359,7 @@ guessBtn.addEventListener("click", () => {
     }
     if (typed === currentEpisode.answer) {
         guessFeedback.textContent = "Any idea on the gift now?";
+        guessBtn.disabled = true;
         markWatched(currentEpisode);
         
     } else if (guessesUsed === currentEpisode.guesses){
@@ -396,4 +397,6 @@ guessBtn.addEventListener("click", () => {
     });
     
     board.appendChild(row);
+    guessInput.value = "";
+    guessInput.focus();
 });
