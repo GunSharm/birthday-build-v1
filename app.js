@@ -187,6 +187,7 @@ episodes.forEach((episode,i) => {
             guessFeedback.textContent = ""
             guessInput.value = "" 
             guessBtn.disabled = false
+            guessInput.focus();
         } else if (episode.type === "Connections") {
             connectionsTitle.textContent = episode.title;
             connections.hidden=false;
@@ -340,6 +341,11 @@ closeCrossword.addEventListener("click", () =>{
     crossword.hidden = true;
 });
 
+guessInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        guessBtn.click();
+    }
+});
 
 guessBtn.addEventListener("click", () => {
     const typed = guessInput.value.toUpperCase();
