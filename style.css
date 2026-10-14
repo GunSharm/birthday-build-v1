@@ -65,7 +65,7 @@ body {
     object-fit: cover;
     border: 3px solid transparent;
     box-sizing: border-box;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
 }
 
 .guest-avatar {
@@ -82,6 +82,8 @@ body {
 .color-btn:hover .avatar {
     border-color: var(--text);
     transform: scale(1.08);
+    box-shadow: 0 0 28px rgba(212, 220, 255, 0.5);
+    filter: brightness(1.1);
 }
 
 .color-btn:active .avatar {
@@ -453,10 +455,12 @@ main button {
     font-size: 22px;
     font-weight: 500;
     cursor: pointer;
+    transition: box-shadow 0.2s;
 }
 
 #ready-btn:hover {
     background-color: #ffffff;
+    box-shadow: 0 0 24px rgba(236, 228, 212, 0.6);
 }
 
 #puzzle, #connections, #crossword {
