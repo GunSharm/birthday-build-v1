@@ -32,6 +32,17 @@ const crosswordGrid = document.querySelector("#crossword-grid")
 const playBtn = document.querySelector("#play-btn")
 const readyBtn = document.querySelector("#ready-btn")
 const lockedRow = document.querySelector("#locked-row")
+const trivia = document.querySelector("#trivia")
+const triviaTitle = document.querySelector("#trivia-title")
+const triviaProgress = document.querySelector("#trivia-progress")
+const triviaQuestion = document.querySelector("#trivia-question")
+const triviaSlots = document.querySelector("#trivia-slots")
+const triviaInput = document.querySelector("#trivia-input")
+const triviaBtn = document.querySelector("#trivia-btn")
+const triviaSkip = document.querySelector("#trivia-skip")
+const triviaFeedback = document.querySelector("#trivia-feedback")
+const triviaScore = document.querySelector("#trivia-score")
+const closeTrivia = document.querySelector("#close-trivia")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -98,7 +109,7 @@ const episodes = [
             blurb: "Something golden is hiding."
     },
     {
-        title: "Episode 4 | Full Time", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35", locked: true,
+        title: "Episode 4 | Full Time", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35",
         type: "Trivia",
         target: 20,
         perPrompt: 3,
@@ -226,6 +237,7 @@ function hideAll() {
     puzzle.hidden = true;
     connections.hidden = true;
     crossword.hidden = true;
+    trivia.hidden = true;
 }
 
 function drawTiles() {
@@ -324,6 +336,10 @@ episodes.forEach((episode,i) => {
             submitBtn.disabled = false;
             drawTiles();
 
+        } else if (episode.type === "Trivia") {
+            triviaTitle.textContent = episode.title;
+            triviaQuestion.textContent = episode.prompts[0].question;
+            trivia.hidden = false; 
         } else {
             crosswordTitle.textContent = episode.title;
             crossword.hidden = false;
@@ -461,6 +477,10 @@ closeConnections.addEventListener("click", () =>{
 });
 closeCrossword.addEventListener("click", () =>{
     crossword.hidden = true;
+});
+
+closeTrivia.addEventListener("click", () => {
+    trivia.hidden = true;
 });
 
 guessInput.addEventListener("keydown", (event) => {
