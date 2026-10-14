@@ -64,13 +64,13 @@ readyBtn.addEventListener("click", () => {
 
 const episodes = [
     {
-        title: "Episode 1 | The Opening Round", type: "Wordle", tag:"Wordle", runtime: "5 min", color:"#1d3557", answer: "GUNNERS", guesses: 7, 
+        title: "Episode 1 | The Opening Round", type: "Wordle", tag:"Wordle", runtime: "5 min", color:"#2f6bbf", answer: "GUNNERS", guesses: 7, 
         hint1: "Born in a factory, named for what it made. Wear the red, and the cannon is your shade.", 
         hint2: "Not the club. The nickname. Seven letters, and the crowd sings it loud.",
         blurb: "Seven letters. One nickname."
     },
     {
-        title: "Episode 2 | The Whole Picture", type:"Connections", tag:"Connections", runtime: "10 min", color:"#1d3557",
+        title: "Episode 2 | The Whole Picture", type:"Connections", tag:"Connections", runtime: "10 min", color:"#14867f",
         teaser: "That's a lot of you in one place. Any idea how I'd fit it all on a gift?",
         groups: [
         { name: "BIG BACK Activities", words: ["SUSHI", "BIRYANI", "RAMEN", "BURGERS", "FRIES"], color: "#fff3b0" },

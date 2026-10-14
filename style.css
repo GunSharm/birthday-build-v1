@@ -125,10 +125,13 @@ body {
     justify-content: flex-end;
     text-align: left;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
 }
 
 .card:hover {
     transform: scale(1.05);
+    filter: brightness(1.15);
 }
 
 .card.locked:hover {
