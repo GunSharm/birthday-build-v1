@@ -44,6 +44,15 @@ const triviaFeedback = document.querySelector("#trivia-feedback")
 const triviaScore = document.querySelector("#trivia-score")
 const closeTrivia = document.querySelector("#close-trivia")
 const triviaAgain = document.querySelector("#trivia-again")
+const finale = document.querySelector("#finale")
+const finaleTitle = document.querySelector("#finale-title")
+const finaleQuestion = document.querySelector("#finale-question")
+const finalePlay = document.querySelector("#finale-play")
+const finaleHint = document.querySelector("#finale-hint")
+const finaleReply = document.querySelector("#finale-reply")
+const rateLove = document.querySelector("#rate-love")
+const rateReally = document.querySelector("#rate-really")
+const closeFinale = document.querySelector("#close-finale")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -55,6 +64,10 @@ let triviaPrompt = 0
 let triviaFound = []
 let triviaTotal = 0
 let triviaUnknown = ""
+let loveX = 0
+let loveY = 0
+let dodgeCount = 0
+let lastDodge = 0
 
 
 
@@ -232,7 +245,15 @@ const episodes = [
             }
         ]
     },
-    { title: "Episode 5 | The Finale", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35", locked: true }
+    {
+        title: "Episode 5 | The Finale", tag: "Feedback", runtime: "1 min", color: "#8a6f17",
+        type: "Feedback",
+        question: "Season 28 is almost over, Panda. How was it?",
+        blurb: "Only one button works.",
+        intro: "Go on, try clicking Love this.",
+        hints: ["Hm. It moved.", "Try again.", "Love this is feeling shy...", "It really does not want to be clicked.", "Try the glowing one, Panda."],
+        reply: "Really love it? Season 29 is already in production."
+    }
 ];
 
 function clean(text) {
@@ -244,6 +265,7 @@ function hideAll() {
     connections.hidden = true;
     crossword.hidden = true;
     trivia.hidden = true;
+    finale.hidden = true;
 }
 
 function drawTiles() {
@@ -486,6 +508,16 @@ episodes.forEach((episode,i) => {
             triviaTitle.textContent = episode.title;
             trivia.hidden = false;
             startTrivia();
+        } else if (episode.type === "Feedback") {
+            finaleTitle.textContent = episode.title;
+            finaleQuestion.textContent = episode.question;
+            finaleReply.textContent = "";
+            finaleHint.textContent = episode.intro;
+            loveX = 0;
+            loveY = 0;
+            dodgeCount = 0;
+            rateLove.style.transform = "";
+            finale.hidden = false;
         } else {
             crosswordTitle.textContent = episode.title;
             crossword.hidden = false;
@@ -703,3 +735,78 @@ triviaInput.addEventListener("keydown", (event) => {
 
 triviaSkip.addEventListener("click", nextPrompt);
 triviaAgain.addEventListener("click", startTrivia);
+
+function dodgeLove(px, py) {
+    const now = Date.now();
+    if (now - lastDodge < 320) {
+        return;
+    }
+    lastDodge = now;
+    const area = finalePlay.getBoundingClientRect();
+    const mine = rateLove.getBoundingClientRect();
+    const other = rateReally.getBoundingClientRect();
+    const baseLeft = mine.left - loveX;
+    const baseTop = mine.top - loveY;
+    let spot = null;
+    for (let t = 0; t < 40 && !spot; t++) {
+        const left = area.left + Math.random() * (area.width - mine.width);
+        const top = area.top + Math.random() * (area.height - mine.height);
+        const centerX = left + mine.width / 2;
+        const centerY = top + mine.height / 2;
+        const farEnough = Math.hypot(centerX - px, centerY - py) > 170;
+        const touching = !(left + mine.width < other.left - 12 || left > other.right + 12 || top + mine.height < other.top - 12 || top > other.bottom + 12);
+        if (farEnough && !touching) {
+            spot = { left: left, top: top };
+        }
+    }
+    if (!spot) {
+        return;
+    }
+    loveX = spot.left - baseLeft;
+    loveY = spot.top - baseTop;
+    rateLove.style.transform = `translate(${loveX}px, ${loveY}px)`;
+    const hints = currentEpisode.hints;
+    finaleHint.textContent = hints[Math.min(dodgeCount, hints.length - 1)];
+    dodgeCount++;
+}
+
+function floatHearts() {
+    for (let h = 0; h < 14; h++) {
+        const heart = document.createElement("span");
+        heart.className = "float-heart";
+        heart.textContent = "💖";
+        heart.style.left = Math.random() * 90 + "%";
+        heart.style.animationDelay = Math.random() * 0.6 + "s";
+        finale.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+    }
+}
+
+finalePlay.addEventListener("pointermove", (event) => {
+    const box = rateLove.getBoundingClientRect();
+    const distance = Math.hypot(event.clientX - (box.left + box.width / 2), event.clientY - (box.top + box.height / 2));
+    if (distance < 115) {
+        dodgeLove(event.clientX, event.clientY);
+    }
+});
+
+rateLove.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    dodgeLove(event.clientX, event.clientY);
+});
+
+rateLove.addEventListener("click", () => {
+    const box = rateLove.getBoundingClientRect();
+    dodgeLove(box.left + box.width / 2, box.top + box.height / 2);
+});
+
+rateReally.addEventListener("click", () => {
+    finaleReply.textContent = currentEpisode.reply;
+    finaleHint.textContent = "";
+    floatHearts();
+    markWatched(currentEpisode);
+});
+
+closeFinale.addEventListener("click", () => {
+    finale.hidden = true;
+});
