@@ -738,7 +738,7 @@ triviaAgain.addEventListener("click", startTrivia);
 
 function dodgeLove(px, py) {
     const now = Date.now();
-    if (now - lastDodge < 320) {
+    if (now - lastDodge < 180) {
         return;
     }
     lastDodge = now;
@@ -785,7 +785,7 @@ function floatHearts() {
 finalePlay.addEventListener("pointermove", (event) => {
     const box = rateLove.getBoundingClientRect();
     const distance = Math.hypot(event.clientX - (box.left + box.width / 2), event.clientY - (box.top + box.height / 2));
-    if (distance < 115) {
+    if (distance < 140) {
         dodgeLove(event.clientX, event.clientY);
     }
 });

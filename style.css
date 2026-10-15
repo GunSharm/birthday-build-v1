@@ -146,6 +146,7 @@ body {
     gap: 20px;
     overflow-x: auto;
     padding: 10px 20px;
+    flex-wrap: wrap;
 }
 
 .card p {
