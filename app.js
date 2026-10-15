@@ -43,6 +43,7 @@ const triviaSkip = document.querySelector("#trivia-skip")
 const triviaFeedback = document.querySelector("#trivia-feedback")
 const triviaScore = document.querySelector("#trivia-score")
 const closeTrivia = document.querySelector("#close-trivia")
+const triviaAgain = document.querySelector("#trivia-again")
 let currentWords = []
 let currentEpisode= null
 let guessesUsed = 0
@@ -50,6 +51,10 @@ let selected = []
 let solved = []
 let cluesSolved = 0
 let goldCells =[]
+let triviaPrompt = 0
+let triviaFound = []
+let triviaTotal = 0
+let triviaUnknown = ""
 
 
 
@@ -109,12 +114,13 @@ const episodes = [
             blurb: "Something golden is hiding."
     },
     {
-        title: "Episode 4 | Full Time", tag: "Coming soon", runtime: "In Progress", color: "#2a2a35",
+        title: "Episode 4 | Full Time", tag: "Trivia", runtime: "10 min", color: "#4a4fa3",
         type: "Trivia",
         target: 20,
         perPrompt: 3,
-        teaser: "Full time, Panda. Now you need something to wear on matchday.",
+        teaser: "Final whistle, Panda. Now you need something to wear on matchday.",
         retry: "Not enough yet, Panda. There are more names in there. Go again?",
+        blurb: "Deep cuts score big.",
         prompts: [
             {
                 question: "Name a player from the 2003-04 Invincibles squad",
@@ -291,6 +297,146 @@ function updatePlay() {
     }
 }
 
+function updateScore() {
+    triviaScore.textContent = `Score: ${triviaTotal}`;
+}
+function drawBalls(done) {
+    triviaProgress.innerHTML = "";
+    for (let q = 0; q < currentEpisode.prompts.length; q++) {
+        const ball = document.createElement("span");
+        ball.className = "ball";
+        if (q < done) {
+            ball.textContent = "⚽";
+            ball.classList.add("done");
+        } else if (q === done) {
+            ball.classList.add("now");
+        }
+        triviaProgress.appendChild(ball);
+    }
+}
+
+function showPrompt() {
+    const prompt = currentEpisode.prompts[triviaPrompt];
+    drawBalls(triviaPrompt);
+    triviaQuestion.textContent = prompt.question;
+    triviaSlots.innerHTML = "";
+    for (let s = 0; s < currentEpisode.perPrompt; s++) {
+        const slot = document.createElement("div");
+        slot.className = "trivia-slot";
+        if (triviaFound[s]) {
+            const nameSpan = document.createElement("span");
+            nameSpan.className = "slot-name";
+            nameSpan.textContent = triviaFound[s].label;
+            const ptsSpan = document.createElement("span");
+            ptsSpan.className = "slot-pts";
+            ptsSpan.textContent = `+${triviaFound[s].answer.points}`;
+            slot.appendChild(nameSpan);
+            slot.appendChild(ptsSpan);
+            slot.classList.add("filled");
+        }
+        triviaSlots.appendChild(slot);
+    }
+    updateScore();
+    triviaInput.value = "";
+    triviaInput.focus();
+}
+
+function findAnswer(typed) {
+    const prompt = currentEpisode.prompts[triviaPrompt];
+    const cleaned = clean(typed);
+    return prompt.answers.find((a) => a.names.some((n) => clean(n) === cleaned));
+}
+
+function nextPrompt() {
+    triviaUnknown = "";
+    triviaPrompt++;
+    triviaFound = [];
+    triviaFeedback.textContent = "";
+    if (triviaPrompt >= currentEpisode.prompts.length) {
+        finishTrivia();
+    } else {
+        showPrompt();
+    }
+}
+
+function startTrivia() {
+    triviaUnknown = "";
+    triviaPrompt = 0;
+    triviaFound = [];
+    triviaTotal = 0;
+    triviaFeedback.textContent = "";
+    triviaInput.hidden = false;
+    triviaBtn.hidden = false;
+    triviaSkip.hidden = false;
+    triviaAgain.hidden = true;
+    showPrompt();
+}
+
+function finishTrivia() {
+    drawBalls(currentEpisode.prompts.length);
+    triviaSlots.innerHTML = "";
+    triviaInput.hidden = true;
+    triviaBtn.hidden = true;
+    triviaSkip.hidden = true;
+    triviaScore.textContent = "";
+    triviaQuestion.textContent = currentEpisode.teaser;
+    triviaFeedback.textContent = `You scored ${triviaTotal}.`;
+    triviaAgain.hidden = false;
+    markWatched(currentEpisode);
+}
+
+function checkFull() {
+    if (triviaFound.length === currentEpisode.perPrompt) {
+        const promptAtStart = triviaPrompt;
+        setTimeout(() => {
+            if (triviaPrompt === promptAtStart) {
+                nextPrompt();
+            }
+        }, 1000);
+    }
+}
+
+function submitTrivia() {
+    if (triviaFound.length >= currentEpisode.perPrompt) {
+        return;
+    }
+    const typed = triviaInput.value.trim();
+    if (typed === "") {
+        return;
+    }
+    const match = findAnswer(typed);
+    if (!match) {
+        triviaUnknown = typed;
+        triviaFeedback.textContent = `"${typed}" isn't on my list, Panda. Try another.`;
+        triviaInput.value = "";
+        return;
+    }
+    if (triviaFound.some((f) => f.answer === match)) {
+        triviaFeedback.textContent = "You already got that one.";
+        triviaInput.value = "";
+        return;
+    }
+    triviaUnknown = "";
+    triviaFound.push({ answer: match, label: typed });
+    triviaTotal += match.points;
+    showPrompt();
+    triviaFeedback.textContent = `${typed} counts for ${match.points}!`;
+    checkFull();
+}
+
+function refereeRuling() {
+    if (triviaUnknown === "" || triviaFound.length >= currentEpisode.perPrompt) {
+        return;
+    }
+    const label = triviaUnknown;
+    triviaUnknown = "";
+    triviaFound.push({ answer: { points: 1 }, label: label });
+    triviaTotal += 1;
+    showPrompt();
+    triviaFeedback.textContent = `Referee's ruling: ${label} counts!`;
+    checkFull();
+}
+
 episodes.forEach((episode,i) => {
     const card = document.createElement("div");
     episode.card = card;
@@ -338,8 +484,8 @@ episodes.forEach((episode,i) => {
 
         } else if (episode.type === "Trivia") {
             triviaTitle.textContent = episode.title;
-            triviaQuestion.textContent = episode.prompts[0].question;
-            trivia.hidden = false; 
+            trivia.hidden = false;
+            startTrivia();
         } else {
             crosswordTitle.textContent = episode.title;
             crossword.hidden = false;
@@ -542,3 +688,18 @@ guessBtn.addEventListener("click", () => {
     guessInput.value = "";
     guessInput.focus();
 });
+
+triviaBtn.addEventListener("click", submitTrivia);
+
+triviaInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        triviaBtn.click();
+    }
+    if (event.key === "=") {
+        event.preventDefault();
+        refereeRuling();
+    }
+});
+
+triviaSkip.addEventListener("click", nextPrompt);
+triviaAgain.addEventListener("click", startTrivia);
