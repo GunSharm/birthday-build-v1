@@ -118,7 +118,7 @@ const episodes = [
         type: "Trivia",
         target: 20,
         perPrompt: 3,
-        teaser: "Full time, Panda. Now you need something to wear on matchday.",
+        teaser: "Final whistle, Panda. Now you need something to wear on matchday.",
         retry: "Not enough yet, Panda. There are more names in there. Go again?",
         blurb: "Deep cuts score big.",
         prompts: [
@@ -298,19 +298,40 @@ function updatePlay() {
 }
 
 function updateScore() {
-    triviaScore.textContent = `Score: ${triviaTotal} / ${currentEpisode.target}`;
+    triviaScore.textContent = `Score: ${triviaTotal}`;
+}
+function drawBalls(done) {
+    triviaProgress.innerHTML = "";
+    for (let q = 0; q < currentEpisode.prompts.length; q++) {
+        const ball = document.createElement("span");
+        ball.className = "ball";
+        if (q < done) {
+            ball.textContent = "⚽";
+            ball.classList.add("done");
+        } else if (q === done) {
+            ball.classList.add("now");
+        }
+        triviaProgress.appendChild(ball);
+    }
 }
 
 function showPrompt() {
     const prompt = currentEpisode.prompts[triviaPrompt];
-    triviaProgress.textContent = `Question ${triviaPrompt + 1} of ${currentEpisode.prompts.length}`;
+    drawBalls(triviaPrompt);
     triviaQuestion.textContent = prompt.question;
     triviaSlots.innerHTML = "";
     for (let s = 0; s < currentEpisode.perPrompt; s++) {
         const slot = document.createElement("div");
         slot.className = "trivia-slot";
         if (triviaFound[s]) {
-            slot.textContent = `${triviaFound[s].label}  +${triviaFound[s].answer.points}`;
+            const nameSpan = document.createElement("span");
+            nameSpan.className = "slot-name";
+            nameSpan.textContent = triviaFound[s].label;
+            const ptsSpan = document.createElement("span");
+            ptsSpan.className = "slot-pts";
+            ptsSpan.textContent = `+${triviaFound[s].answer.points}`;
+            slot.appendChild(nameSpan);
+            slot.appendChild(ptsSpan);
             slot.classList.add("filled");
         }
         triviaSlots.appendChild(slot);
@@ -352,21 +373,16 @@ function startTrivia() {
 }
 
 function finishTrivia() {
-    triviaProgress.textContent = "Full time";
+    drawBalls(currentEpisode.prompts.length);
     triviaSlots.innerHTML = "";
     triviaInput.hidden = true;
     triviaBtn.hidden = true;
     triviaSkip.hidden = true;
-    updateScore();
-    if (triviaTotal >= currentEpisode.target) {
-        triviaQuestion.textContent = currentEpisode.teaser;
-        triviaFeedback.textContent = `You scored ${triviaTotal}.`;
-        markWatched(currentEpisode);
-    } else {
-        triviaQuestion.textContent = currentEpisode.retry;
-        triviaFeedback.textContent = `You scored ${triviaTotal} out of the ${currentEpisode.target} you need.`;
-        triviaAgain.hidden = false;
-    }
+    triviaScore.textContent = "";
+    triviaQuestion.textContent = currentEpisode.teaser;
+    triviaFeedback.textContent = `You scored ${triviaTotal}.`;
+    triviaAgain.hidden = false;
+    markWatched(currentEpisode);
 }
 
 function checkFull() {
